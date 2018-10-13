@@ -1,27 +1,37 @@
 // importing named exports we use brackets
-import { createPostTile, uploadImage } from './helpers.js';
+import { checkStore } from './helpers.js';
+import { fetch_feed } from './feed.js';
+import { login_form_show, register_form_show } from './user.js';
 
-// when importing 'default' exports, use below syntax
-import API from './api.js';
 
-const api  = new API();
+// routing function
+const change_hash_location = () => {
+    const new_hash_location = window.location.hash.substr(1);
+    const parent = document.getElementById('large-feed');
+    while (parent.firstChild) {
+        parent.removeChild(parent.firstChild);
+    }
+    if (!new_hash_location) {
+        fetch_feed();
+    } else if (new_hash_location === 'login') {
+        login_form_show();
+    } else if (new_hash_location === 'signup') {
+        register_form_show();
+    }
+}
+change_hash_location();
+window.onhashchange = change_hash_location;
 
-// we can use this single api request multiple times
-const feed = api.getFeed();
+// logo icon click event
+document.getElementById("logo-icon").addEventListener("click", () => { window.location.hash = "";});
+// login button event
+document.getElementById("login-button").addEventListener("click", () => { if (window.location.hash.substr(1) !== "login") window.location.hash = "#login"; });
 
-feed
-.then(posts => {
-    posts.reduce((parent, post) => {
-
-        parent.appendChild(createPostTile(post));
-        
-        return parent;
-
-    }, document.getElementById('large-feed'))
-});
-
-// Potential example to upload an image
-const input = document.querySelector('input[type="file"]');
-
-input.addEventListener('change', uploadImage);
-
+// show upload
+if (checkStore("AUTH_KEY") !== null) {
+    document.getElementById("upload-event").style.display = "block";
+    document.getElementById("user-event-nav").style.display = 'none';
+} else {
+    document.getElementById("upload-event").style.display = "none";
+    document.getElementById("user-event-nav").style.display = 'block';
+}

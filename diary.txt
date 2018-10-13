@@ -1,1 +1,2 @@
-13/10/18     18:00   18:15   put the first real entry in diary.txt (delete this line!)
+12/10/18    12:00   18:15   read the doc and set up frontend and backend start to do the login model
+13/10/18    12:00   18:15   change the url as hash url and develop the post section and keep doing login model

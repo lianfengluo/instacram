@@ -13,14 +13,21 @@
 <body>
     <!-- This is an example app structure --> 
     <header class='banner'>
-        <h1>Instacram</h1>
-        <ul class='nav'>
+        <h1 id="logo-icon">Instacram</h1>
+        <ul class='nav' id='user-event-nav'>
+            <div id='login-button' class="nav-item">Login</div>
+        </ul>
+        <ul class='nav' id='upload-event'>
             <li class="nav-item"><input type="file"/></li>
-            <li class='nav-item'>Icon</li>
-            <li class='nav-item'>Icon</li>
+            <li class='nav-item'>Upload</li>
+            <li class='nav-item'>Clear</li>
         </ul>
     </header>
     <main role='main'>
+        <!-- 
+        <div id="login">
+        <div>
+        -->
         <!-- app goes here --> 
         <div id='large-feed'>
             <!-- inject feed data -->
