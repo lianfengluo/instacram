@@ -1,2 +1,3 @@
-12/10/18    12:00   18:15   read the doc and set up frontend and backend start to do the login model
-13/10/18    12:00   18:15   change the url as hash url and develop the post section and keep doing login model
+12/10/18    12:00pm   18:15pm   read the doc and set up frontend and backend start to do the login model
+13/10/18    12:00pm   18:15pm   change the url as hash url and develop the post section and keep doing login model
+13/10/18    9:00am   4:30pm   doing the signup ui and api interaction and doing the posting feed ui and interaction

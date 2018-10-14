@@ -7,8 +7,19 @@ html, body {
     height: 100%;
     font-family: -apple-system, 'Open Sans', 'Helvetica Neue', sans-serif;
 }
-
+#top-empty-space {
+    top:0;
+    margin: 0;
+    width: 100%;
+    min-height: 50px;
+    max-height: 50px;
+}
 .banner {
+    position: fixed;
+    top:0;
+    margin: 0;
+    width: 100%;
+    z-index: 99 !important;
     display: flex;
     flex-direction: row;
     flex-wrap: nowrap;
@@ -16,7 +27,8 @@ html, body {
     align-items: center;
     padding: 10px;
     background-color:white;
-    min-height: 60px;
+    min-height: 50px;
+    max-height: 50px;
     border-bottom: 1px solid rgba(0,0,0,.0975);
 }
 
@@ -101,7 +113,7 @@ footer {
     font-size: 12px;
     font-weight: 600;
 }
-.comments-icon, .likes-icon {
+.comments-icon, .likes-icon, .login-icon, .upload-icon {
     overflow: hidden;
     width: 20px;
     height: 20px;
@@ -144,6 +156,7 @@ footer {
 }
 #login_form, #reigster_form {
     max-width: 640px;
+    min-width: 440px;
     overflow: hidden;
     margin: 30px auto;
     background-color: white;
@@ -158,10 +171,11 @@ footer {
     height: 350px;
 }
 #reigster_form {
-    height: 550px;
+    height: 450px;
 }
 #login_form > * >input[type=text], #login_form > * > input[type=password], 
-#reigster_form > * >input[type=text], #reigster_form > * > input[type=password] {
+#reigster_form > * >input[type=text], #reigster_form > * > input[type=password],
+#reigster_form > * > input[type=email] {
     width: 300px;
     padding: 12px 20px;
     margin: 8px 0;
@@ -176,7 +190,7 @@ footer {
 input[type=text], input[type=password] {
     outline-width: 0;
 }
-#login_form > button, #reigster_form > button {
+#login_form > button, #reigster_form > button{
     background-color: rgb(48, 135, 250);
     border: none;
     border-radius: 5%;
@@ -185,13 +199,31 @@ input[type=text], input[type=password] {
     cursor: pointer;
     width: 80px;
 }
+.post-form > button {
+    margin-top: 5px;
+    background-color: white;
+    border: 1px solid black;
+    border-radius: 5%;
+    color: white;
+    cursor: pointer;
+    width: 80px;
+}
 button:hover {
     opacity: 0.8;
 }
 #user-event-nav {
-    width: 200px;
+    width: 350px;
+    display: inline-block;
     padding: 0;
     text-align: right;
+}
+#upload-event {
+    /* width: 350px; */
+    max-width: 400px;
+    min-width: 350px;
+    padding: 0;
+    text-align: right;
+    display:inline-block;
 }
 #user-event-nav > .nav-item {
     font-size: 20px;
@@ -199,15 +231,86 @@ button:hover {
     color:rgb(17, 15, 15);
     border-radius: 10%;
 }
-#login-button {
+#upload-event > .nav-item {
+    font-size: 15px;
+    background-color: rgba(255, 255, 255, 0.815);
+    color:rgb(17, 15, 15);
+    border-radius: 10%;
+}
+#login-logout-button, #profile-button, #post-submit-button {
     width:100px; /* or whatever width you want. */
     max-width:100px; /* or whatever width you want. */
+    margin:10px;
 }
-#login-button:hover, #register-button:hover, #register_link:hover {
+#login-logout-button:hover, #profile-button:hover, #register-button:hover, #register_link:hover, #login_link:hover, #upload-image:hover,
+#post-submit-button:hover {
     cursor: pointer;
     opacity: 0.8;
 }
-#register_link {
+
+
+#register_link, #login_link {
     text-decoration: none;
     color: rgb(0, 140, 255);
+}
+
+
+.post-post {
+    max-width: 640px;
+    overflow: hidden;
+    text-align: center;
+    margin: 30px auto;
+    background-color: white;
+    border: 1px solid rgba(0,0,0,.0975);
+}
+.post-form {
+    width: 95%;
+    text-align: center;
+    padding: 20px;
+}
+#post-textarea {
+    resize: none;
+    width: 90%;
+    font-size: 20px;
+    height: 300px;
+    border-radius: 3px;
+}
+.upload-file-field {
+    outline-width: 0;
+    padding: 10px;
+    border-radius: 10px;
+    margin: 0;
+    display: inline-block;
+    box-sizing: border-box;
+    width: 70%;
+    font-size: 15px;
+}
+.post-submit-button {
+    margin-left: 10px;
+    height: 45px;
+    font-size: 20px;
+}
+textarea:hover, 
+input:hover, 
+textarea:active, 
+input:active, 
+textarea:focus, 
+input:focus,
+button:focus,
+button:active,
+button:hover,
+label:focus,
+.btn:active,
+.btn.active
+{
+    outline:0px !important;
+    -webkit-appearance:none;
+}
+textarea {
+    overflow: auto;
+    outline: none;
+
+    -webkit-box-shadow: none;
+    -moz-box-shadow: none;
+    box-shadow: none;
 }

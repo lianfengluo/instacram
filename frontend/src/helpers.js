@@ -1,4 +1,4 @@
-const URL = 'http://localhost:8080/data'
+const STATIC_URL = 'http://localhost:8080/data'
 /* returns an empty array of size max */
 export const range = (max) => Array(max).fill(null);
 
@@ -44,10 +44,10 @@ export function createPostTile(post) {
     section.appendChild(createElement("p", null, { class: "post-description_text"}));
     const section_box = createElement("section", null, {class: "post-box"});
     const comments_box = createElement("div", null, { class: "post-comments-box" });
-    comments_box.appendChild(createElement("img", null, {alt:"comments icon", class:"comments-icon", src: `${URL}/blogging.svg`}))
+    comments_box.appendChild(createElement("img", null, {alt:"comments icon", class:"comments-icon", src: `${STATIC_URL}/blogging.svg`}))
     
     const like_box = createElement("div", null, { class: "post-likes-box" });
-    like_box.appendChild(createElement("img", null, {alt:"likes icon", class:"likes-icon", src: `${URL}/like.svg`}))
+    like_box.appendChild(createElement("img", null, {alt:"likes icon", class:"likes-icon", src: `${STATIC_URL}/like.svg`}))
     section_box.appendChild(comments_box);
     section_box.appendChild(like_box);
     section.appendChild(section_box);
@@ -70,12 +70,12 @@ export function uploadImage(event) {
     
     // if we get here we have a valid image
     const reader = new FileReader();
-    
     reader.onload = (e) => {
         // do something with the data result
         const dataURL = e.target.result;
-        const image = createElement('img', null, { src: dataURL });
-        document.body.appendChild(image);
+        // upload_data = { description_text: event.target.text, src: dataURL }
+        // const image = createElement('img', null, { src: dataURL });
+        // document.body.appendChild(image);
     };
 
     // this returns a base64 image

@@ -27,8 +27,22 @@ export default class API {
     /**
      * @returns feed array in json format
      */
-    getFeed() {
-        return this.makeAPIRequest('feed.json');
+    getFeed(path, data = {}, token = null) {
+        return fetch(`${this.url}/${path}`, {
+            method: "GET", // *GET, POST, PUT, DELETE, etc.
+            mode: "cors", // no-cors, cors, *same-origin
+            cache: "no-cache", // *default, no-cache, reload, force-cache, only-if-cached
+            credentials: "same-origin", // include, same-origin, *omit
+            headers: {
+                "Content-Type": "application/json; charset=utf-8",
+                "Authorization": `Token ${token}`
+                // "Content-Type": "application/x-www-form-urlencoded",
+            },
+            redirect: "follow", // manual, *follow, error
+            referrer: "no-referrer", // no-referrer, *client
+        })
+            .then(response => response.json()) // parses response to JSON
+            .catch(err => console.warn(`API_ERROR: ${err.message}`));
     }
 
     /**
@@ -37,7 +51,7 @@ export default class API {
     getMe() {
         return this.makeAPIRequest('me.json');
     }
-    postData(path, data = {}) {
+    postData(path, data = {}, token = null) {
         // Default options are marked with *
         return fetch(`${this.url}/${path}`, {
             method: "POST", // *GET, POST, PUT, DELETE, etc.
@@ -46,6 +60,7 @@ export default class API {
             credentials: "same-origin", // include, same-origin, *omit
             headers: {
                 "Content-Type": "application/json; charset=utf-8",
+                "Authorization": `Token ${token}`
                 // "Content-Type": "application/x-www-form-urlencoded",
             },
             redirect: "follow", // manual, *follow, error
