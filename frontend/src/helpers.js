@@ -35,7 +35,7 @@ export function createElement(tag, data, options = {}) {
  * @param   {object}        post 
  * @returns {HTMLElement}
  */
-export function createPostTile(post) {
+export function createFeed(post) {
     const section = createElement('section', null, { class: 'post' });
 
     section.appendChild(createElement('h2', post.meta.author, { class: 'post-title' }));
