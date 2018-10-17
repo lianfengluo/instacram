@@ -170,9 +170,8 @@ const login_submit = () => {
         if ("token" in result) {
             // set the token
             window.localStorage.setItem('AUTH_KEY', result.token);
-            window.localStorage.setItem('username', username);
             // rerender the posts page
-            // window.location.hash = "#me";
+            fill_login_info();
             change_hash_location();
         } else {
             // error message
@@ -199,9 +198,8 @@ const signup_submit = () => {
         if ("token" in result) {
             // set the token
             window.localStorage.setItem('AUTH_KEY', result.token);
-            window.localStorage.setItem('username', username);
+            fill_login_info();
             // rerender the posts page
-            // window.location.hash = "#me";
             window.location.hash = "#";
         } else {
             // error message
@@ -210,4 +208,15 @@ const signup_submit = () => {
             form.insertBefore(error_message, div);
         }
     });
+}
+
+const fill_login_info = () => {
+    const results = api.getData("user", window.localStorage.getItem("AUTH_KEY"));
+    results
+        .then(res => {
+            window.localStorage.setItem("username", res.username);
+            window.localStorage.setItem("name", res.name);
+            window.localStorage.setItem("id", res.id);
+            window.localStorage.setItem("email", res.email);
+        })
 }

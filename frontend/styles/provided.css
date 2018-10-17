@@ -70,7 +70,10 @@ footer {
     margin: 0;
     border-bottom: 1px solid rgba(0,0,0,.0975);
 }
-
+.post-title:hover {
+    text-decoration: underline;
+    cursor: pointer;
+}
 .post-pushlished-time {
     font-size: 14px;
     font-stretch: 100%;
@@ -249,7 +252,7 @@ button:hover {
     color:rgb(17, 15, 15);
     border-radius: 10%;
 }
-#login-button, #profile-button {
+#login-button, #profile-button, #my-post-button {
     width:100px; 
     max-width:100px; 
     margin:10px;
@@ -284,7 +287,7 @@ button:hover {
 #login-button:hover, #profile-button:hover, #register-button:hover, 
 #register_link:hover, #login_link:hover, #upload-image:hover,
 .post-submit-button:hover, #logout-button:hover, #update-button:hover,
-#change-profile-button:hover {
+#change-profile-button:hover, #my-post-button:hover {
     cursor: pointer;
     opacity: 0.8;
 }
@@ -375,7 +378,7 @@ textarea {
     box-shadow: none;
 }
 
-#profile-div {
+#profile-div, #user-page-section {
     padding-bottom: 20px;
     overflow: hidden;
     margin: 30px auto;
@@ -386,13 +389,12 @@ textarea {
     background-color: white !important;
     border: 1px solid rgba(0,0,0,.0975);
 }
-#user-profile-div {
-    max-width: 750px;
-    min-width: 650px;
+#user-info-div, #user-profile-div {
+    width:100%;
     margin: auto 0;
     display: inline-block;
 }
-#user-profile-container {
+#user-profile-container, #user-info-container {
     width: 69.5%;
     margin: 0;
     display: inline-block;
@@ -404,15 +406,20 @@ textarea {
     display: inline-block;
     border-radius: 3px;
 }
-#user-profile-name {
+#user-info-container > div {
+    border: 1px inset rgba(0,0,0,.0975);
+    width: 32%;
+    height: 40px;
+    display: inline-block;
+    border-radius: 3px;
+}
+#user-profile-name, #user-info-name {
     width: 25%;
     font-weight: 600;
     font-size: 25px;
     margin: 0;
+    padding-bottom: 5px;
     display: inline-block;
-}
-#profile-user-form {
-
 }
 #profile-user-form > label {
     display: inline-block;
@@ -429,4 +436,158 @@ textarea {
 }
 .error-message > h1 {
     vertical-align: baseline;
+}
+#preview-image {
+    width: 100px;
+}
+#user-page-title {
+    margin-left: 30px;
+}
+.not-follow {
+    background-color: #3897f0;
+    border: none;
+    border-radius: 5px;
+    color: white;
+    cursor: pointer;
+    height: 25px;
+    font-size:20px;
+    margin-top: 10px;
+    width: 90%;
+}
+.following {
+    border: 1px solid #dbdbdb;
+    color: #262626;
+    border-radius: 5px;
+    background-color: white;
+    cursor: pointer;
+    height: 25px;
+    font-size:20px;
+    margin-top: 10px;
+    width: 90%;
+}
+#img-container {
+    width: 100%;
+    margin: 0 auto;
+    text-align: left;
+}
+#img-container > img {
+    width:33%;
+    margin:0 auto;
+    padding: 0;
+    border: none;
+    height: 300px;
+}
+#user-search-box {
+    width: 250px;
+    padding: 0;
+    margin: auto;
+    font-size: 15px;
+    height: 33px;
+    padding-left: 15%;
+}
+#search-input {
+    height: 100%;
+    width: 250px;
+    padding: 12px 20px;
+    margin: 8px 0;
+    display: inline-block;
+    border: 1px solid #ccc;
+    box-sizing: border-box;
+    border-radius: 2%;
+}
+#search-input::placeholder {
+    text-align: center;
+}
+.comment-area {
+    width: 100%;
+    padding: 0;
+    margin: auto;
+    font-size: 15px;
+    height: 40px;
+    display: none;
+    text-align: center;
+    margin-bottom: 10px;
+}
+.comment-input {
+    height: 33px;
+    width: 80%;
+    margin: 8px 0;
+    display: inline-block;
+    border: 1px solid #ccc;
+    box-sizing: border-box;
+    border-radius: 5px;
+}
+.comment-button {
+    background-color: rgb(48, 135, 250);
+    border: none;
+    border-radius: 5%;
+    color: white;
+    display: inline-block;
+    height: 33px;
+    /* padding: 10px 20px; */
+    cursor: pointer;
+    width: 18%;
+}
+.comment-box {
+    width: 100%;
+    display: inline-block;
+    margin: 5px;
+}
+.comment-box > b {
+    display: inline-block;
+}
+.comment-box > div {
+    display: inline-block;
+}
+.comments-region {
+    width: 100%;
+}
+.comments-region:hover {
+    cursor: pointer;
+    text-decoration: underline;
+}
+.likes-region {
+    width: 100%;
+}
+.likes-region:hover {
+    cursor: pointer;
+    text-decoration: underline;
+}
+/* The Modal (background) */
+.modal {
+    display: none; /* Hidden by default */
+    position: fixed; /* Stay in place */
+    z-index: 1; /* Sit on top */
+    padding-top: 100px; /* Location of the box */
+    left: 0;
+    top: 0;
+    width: 100%; /* Full width */
+    height: 100%; /* Full height */
+    overflow: auto; /* Enable scroll if needed */
+    background-color: rgb(0,0,0); /* Fallback color */
+    background-color: rgba(0,0,0,0.4); /* Black w/ opacity */
+}
+
+/* Modal Content */
+#modal-content {
+    background-color: #fefefe;
+    margin: auto;
+    padding: 20px;
+    border: 1px solid #ccc;
+    width: 80%;
+}
+
+/* The Close Button */
+.close {
+    color: white;
+    float: right;
+    font-size: 28px;
+    font-weight: bold;
+}
+
+.close:hover,
+.close:focus {
+    color: #000;
+    text-decoration: none;
+    cursor: pointer;
 }

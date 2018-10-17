@@ -11,17 +11,14 @@ const STATIC_URL = 'http://localhost:8080/data'
 
 
 export function fetch_feed(p=0, n=10) {
-
     const feed = api_backend.getData(`user/feed?p=${p}&n=${n}`, window.localStorage.getItem("AUTH_KEY"));
     feed
         .then(posts => {
-            if (posts in posts) {
-                if (posts.length > 0) {
-                    posts.reduce((parent, post) => {
+            if ("posts" in posts) {
+                if (posts.posts.length > 0) {
+                    posts.posts.reduce((parent, post) => {
                         parent.appendChild(createFeed(post));
-                        // parent.appendChild()
                         return parent;
-        
                     }, document.getElementById('large-feed'))
                 }
             } else if ("message" in posts) {
@@ -62,7 +59,7 @@ export function show_post_box() {
     upload_file.addEventListener("change", getImageContent);
     submit_post_button.addEventListener("click", (e) => {
         e.preventDefault();
-        if (text_area.value) {
+        if (text_area.value && "src" in upload_file_data) {
             upload_file_data['description_text'] = text_area.value;
             upload_image(upload_file_data);
             document.getElementById("upload-img-name").innerText = "No image has been chosen";
@@ -70,7 +67,7 @@ export function show_post_box() {
             upload_file_data = null;
             text_area.value = '';
             text_area.placeholder = "Something you want to say...";
-        } else {
+        } else if (!text_area.value) {
             text_area.placeholder = "Please input something!";
         }
     });
@@ -80,7 +77,7 @@ const getImageContent = (event) => {
 
     const validFileTypes = ['image/jpeg', 'image/png', 'image/jpg']
     const valid = validFileTypes.find(type => type === file.type);
-
+    const form = document.getElementsByClassName("post-form")[0];
     // bad data, let's walk away
     if (!valid)
         return false;
@@ -89,6 +86,11 @@ const getImageContent = (event) => {
     reader.onload = (e) => {
         // do something with the data result
         const dataURL = e.target.result.split(',')[1];
+        const preview_img = document.getElementById("preview-image");
+        if (preview_img === null)
+           form.appendChild(createElement("img", null, { src: e.target.result, alt:"preview image", id:"preview-image" }))
+        else
+            preview_img.src = e.target.result;
         upload_file_data = { src: dataURL };
     };
         
@@ -102,12 +104,82 @@ const upload_image = (data) => {
     const results = api_backend.postData(post_url, data, window.localStorage.getItem("AUTH_KEY"));
     results.then(result => {
         if ("post_id" in result) {
+            const preview_img = document.getElementById("preview-image");
+            preview_img.parentNode.removeChild(preview_img);
             const post_success = document.getElementById("post-success-word");
             post_success.style.display = "block";
+            document.getElementById("preview-image");
             setTimeout(() => {
                 post_success.style.display = "none";
             }, 2000);
         }
         // result.post_id
     });
+}
+
+const fetch_likes_user = (likes, parent) => {
+    for (const like of likes) {
+        const results = api_backend.getData(`/user?id=${like}`);
+        results
+            .then(res => {
+                if ("id" in res) {
+                    
+                }
+            })
+    }
+}
+
+export function show_likes(likes) {
+    const parent = document.getElementById("modal-content");
+    document.getElementById("myModal").style.display = "block";
+    while (parent.firstChild) {
+        parent.removeChild(parent.firstChild);
+    }
+    parent.appendChild(createElement("h3", "Likes:"));
+    fetch_likes_user(likes, parent);
+    likes.reduce((div, comment) => {
+        const comment_box = createElement("div", null, { class: "comment-box" })
+        const author = createElement("b", `${comment.author}: `, { class: "comment-author" });
+        const message = createElement("div", `  ${comment.comment}`);
+        comment_box.appendChild(author);
+        comment_box.appendChild(message);
+        div.appendChild(comment_box);
+        return div;
+    }, parent);
+}
+
+export function submit_comment(comment, author, post_id, comments_num, comment_input, coment_list) {
+    const timestamp = new Date().getTime() / 1000;
+    const data = { author: author, comment: comment, published: timestamp };
+    const results = api_backend.putData(`post/comment?id=${post_id}`, data, window.localStorage.getItem("AUTH_KEY"));
+    results
+        .then(res => {
+            if ("message" in res) {
+                if (res.message === "success") {
+                    coment_list.push(data);
+                    comments_num.innerText = `${coment_list.length} comments`;
+                    comment_input.value = '';
+                }
+            }
+        })
+}
+
+export function show_comment(comments) {
+    const parent = document.getElementById("modal-content");
+    document.getElementById("myModal").style.display = "block";
+    while (parent.firstChild) {
+        parent.removeChild(parent.firstChild);
+    }
+    const sorted_comments = comments.sort((a, b) =>
+        (parseFloat(b.published) - parseFloat(a.published)));
+    parent.appendChild(createElement("h3", "Comments:"));
+    sorted_comments.reduce((div, comment) => {
+        const comment_box = createElement("div", null, { class: "comment-box" })
+        const author = createElement("b", `${comment.author}: `, { class: "comment-author" });
+        const message = createElement("div", `  ${comment.comment}`);
+        comment_box.appendChild(author);
+        comment_box.appendChild(message);
+        div.appendChild(comment_box);
+        return div;
+    }, parent);
 }

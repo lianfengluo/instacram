@@ -17,3 +17,13 @@ export function show_expired() {
         window.location.hash = "#";
     }, 3000);
 }
+export function no_user_error() {
+    const parent = document.getElementById("large-feed");
+    const error_message = createElement("div", null, { class: "error-message" });
+    const error = createElement("h1", "Invalid username. The page will be redirect in 2s")
+    error_message.appendChild(error);
+    parent.appendChild(error_message);
+    setTimeout(() => {
+        window.location.hash = "#";
+    }, 2000);
+}
