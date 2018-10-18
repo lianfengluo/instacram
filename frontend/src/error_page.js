@@ -1,4 +1,7 @@
 import { createElement } from './helpers.js';
+/**
+ * show error function is redirect user to a error page
+ */
 export function show_error() {
     const parent = document.getElementById("large-feed");
     const error_message = createElement("div", null, {class:"error-message"});
@@ -6,6 +9,10 @@ export function show_error() {
     error_message.appendChild(error);
     parent.appendChild(error_message);
 }
+/**
+ * show expired function is redirect user to a error page
+ * and clear the localstorage to let user login again
+ */
 export function show_expired() {
     const parent = document.getElementById("large-feed");
     const error_message = createElement("div", null, { class: "error-message" });
@@ -17,6 +24,11 @@ export function show_expired() {
         window.location.hash = "#";
     }, 3000);
 }
+/**
+ * no user function is redirect user to a error page
+ * it will happens when user input the invalid username in searching the user
+ * it will redirect back to the previous page
+ */
 export function no_user_error() {
     const parent = document.getElementById("large-feed");
     const error_message = createElement("div", null, { class: "error-message" });
@@ -24,6 +36,6 @@ export function no_user_error() {
     error_message.appendChild(error);
     parent.appendChild(error_message);
     setTimeout(() => {
-        window.location.hash = "#";
+        window.history.go(-2);
     }, 2000);
 }

@@ -10,8 +10,15 @@ const api_backend = new API(BACKEND_URL);
 // we can use this single api request multiple times
 // const feed = api.getFeed();
 
+// this variable is used to keep track on the infinite post
 let post_num = 0;
+// this variable is used to keep track on whether have new message comming
 let first_post_id = null;
+/**
+ * fetch feed function is about sending the request to backend and fetch the posts
+ * @param {number} p the starting position of fetching data 
+ * @param {number} n how posts we want to fetch
+ */
 export function fetch_feed(p=0, n=10) {
     const feed = api_backend.getData(`user/feed?p=${p}&n=${n}`, window.localStorage.getItem('AUTH_KEY'));
     feed
@@ -34,6 +41,16 @@ export function fetch_feed(p=0, n=10) {
         });
 }
 let upload_file_data = {};
+/**
+ * This function is build the dom tree of posting
+ * we will have to cases in this dom 
+ * 1.user posting the post
+ * 2.user change the post
+ * @param {htmlNode} parent Parent that the new node we are going to append on
+ * @param {number} post_id the when use change the posts we have to provide the post id
+ * @param {htmlNode} img_html_object this is the img html node
+ * @param {htmlNode} text_html_object this is the updating text
+ */
 export function add_element_show_post(parent, post_id = null, img_html_object = null, text_html_object = null) {
     const section = createElement('section', null, { class: 'post-post' });
     let h3 = null;
@@ -66,35 +83,55 @@ export function add_element_show_post(parent, post_id = null, img_html_object = 
     section.appendChild(form);
     parent.appendChild(section);
     upload_field_button.addEventListener('click', (e) => { e.preventDefault(); upload_file.click(); });
-    upload_file.addEventListener('change', getImageContent);
+    upload_file.addEventListener('change', (e) => {
+        if (getImageContent(e) === false) {
+            upload_file_name.innerText = 'Invalid image format';
+        }
+    });
     submit_post_button.addEventListener('click', (e) => {
         e.preventDefault();
         if (text_area.value)
             upload_file_data['description_text'] = text_area.value;
         if (post_id !== null) {
             put_image(upload_file_data, post_id, img_html_object, text_html_object);
-            document.getElementById('upload-img-name').innerText = 'No image has been chosen';
+            upload_file_name.innerText = 'No image has been chosen';
             upload_file.value = '';
             upload_file_data = {};
             text_area.value = '';
             text_area.placeholder = 'Something you want to say...';
-        } else if (text_area.value && 'src' in upload_file_data) {
-            upload_image(upload_file_data);
-            document.getElementById('upload-img-name').innerText = 'No image has been chosen';
-            upload_file.value = '';
-            upload_file_data = {};
-            text_area.value = '';
-            text_area.placeholder = 'Something you want to say...';
-        } else if (!text_area.value) {
-            text_area.placeholder = 'Please input something!';
-        }
+        } else {
+            if (text_area.value && 'src' in upload_file_data) {
+                upload_image(upload_file_data);
+                upload_file_name.innerText = 'No image has been chosen';
+                upload_file.value = '';
+                upload_file_data = {};
+                text_area.value = '';
+                text_area.placeholder = 'Something you want to say...';
+            }else {
+                if (!text_area.value)
+                    text_area.placeholder = 'Please input something!';
+                if (!('src' in upload_file_data))
+                    upload_file_name.innerText = 'Please upload your image';
+            }
+        } 
     });
 }
+/**
+ * show post box is the html node that will let user
+ * to post their image
+ */
 export function show_post_box() {
     const parent = document.getElementById('large-feed');
     add_element_show_post(parent);
 }
+/**
+ * get image content is a function that will load the
+ * uploaded image to the variable which is about to submit to the backend
+ * @param {event}  event which is a event that when use change the uploading file
+ * @return {boolean} return false if it not a image 
+ */
 const getImageContent = (event) => {
+    event.preventDefault();
     const [file] = event.target.files;
 
     const validFileTypes = ['image/jpeg', 'image/png', 'image/jpg']
@@ -131,7 +168,11 @@ const upload_image = (data) => {
             const post_success = document.getElementById('post-success-word');
             post_success.style.display = 'block';
             document.getElementById('preview-image');
-            localStorage['posts'] += `,${result.post_id}`;
+            if (window.localStorage['posts'].length === 0) {
+                window.localStorage['posts'] += `${result.post_id}`;
+            } else {
+                window.localStorage['posts'] += `,${result.post_id}`;
+            }
             setTimeout(() => {
                 post_success.style.display = 'none';
             }, 2000);
@@ -249,6 +290,10 @@ export function delete_comfirm(post_id, section) {
         results
             .then(res => {
                 if ('message' in res && res.message === 'success') {
+                    let posts_list = window.localStorage.getItem('posts').split(',');
+                    const index = posts_list.indexOf(post_id.toString());
+                    posts_list.splice(index, 1);
+                    window.localStorage.setItem('posts', posts_list.toString());
                     section.parentNode.removeChild(section);
                     modal.style.display = 'none';
                     window.history.back();
