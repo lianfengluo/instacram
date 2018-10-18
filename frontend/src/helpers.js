@@ -1,6 +1,5 @@
 import { show_likes, submit_comment, show_comment, submit_like, delete_comfirm, modify_post } from './feed.js'
-
-const STATIC_URL = 'http://localhost:8080/data';
+import { STATIC_URL } from './global_var.js';
 /* returns an empty array of size max */
 export const range = (max) => Array(max).fill(null);
 
@@ -104,7 +103,7 @@ export function createFeed(post) {
     comment_submit_button.addEventListener('click', () => {
         submit_comment(comment_input.value, window.localStorage.getItem('name'), post.id, comments_num, comment_input, post.comments);
     })
-    if (window.localStorage.getItem('posts').includes(post.id)) {
+    if (posts_array.includes(post.id.toString())) {
         const modify = createElement('div', 'Modify this post', { class: 'modify-region' });
         section.appendChild(createElement('hr', null));
         section.appendChild(modify);

@@ -1,11 +1,11 @@
 // importing named exports we use brackets
 import { createFeed, createElement } from './helpers.js';
+import { BACKEND_URL, STATIC_URL } from './global_var.js';
 import API from './api.js';
 // when importing 'default' exports, use below syntax
 
 
-const BACKEND_URL = 'http://127.0.0.1:5000';
-const STATIC_URL = 'http://localhost:8080/data';
+
 const api_backend = new API(BACKEND_URL);
 // we can use this single api request multiple times
 // const feed = api.getFeed();
@@ -247,6 +247,7 @@ export function delete_comfirm(post_id, section) {
                 if ('message' in res && res.message === 'success') {
                     section.parentNode.removeChild(section);
                     modal.style.display = 'none';
+                    window.history.back();
                 }
             })
     })

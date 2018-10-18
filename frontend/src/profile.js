@@ -1,9 +1,9 @@
 import { createElement, checkStore } from './helpers.js';
 import { change_hash_location } from './main.js';
 import { show_likes } from './feed.js';
+import { BACKEND_URL } from './global_var.js';
 import API from './api.js';
 
-const BACKEND_URL = 'http://127.0.0.1:5000';
 const api = new API(BACKEND_URL);
 let sum_likes = 0;
 const getLikes = (list, likes_box) => {

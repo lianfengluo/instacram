@@ -2,10 +2,8 @@
 import { createElement } from './helpers.js';
 // when importing 'default' exports, use below syntax
 import API from './api.js';
+import { BACKEND_URL, STATIC_URL } from './global_var.js';
 
-
-const BACKEND_URL = 'http://127.0.0.1:5000';
-const STATIC_URL = 'http://localhost:8080/data';
 const api_backend = new API(BACKEND_URL);
 
 
@@ -64,7 +62,7 @@ const fetch_user_info = (parent, username, id,  following_list) => {
             parent.appendChild(message_container);
             parent.appendChild(createElement('hr', null));
             const img_container = createElement('div', null, {id: 'img-container'});
-            fetch_user_feed(img_container, info.posts);
+            fetch_user_feed(img_container, info.posts.reverse());
             parent.appendChild(img_container);
         } else if ('message' in info) {
             if (info.message === 'User Not Found') {
