@@ -562,7 +562,7 @@ textarea {
     font-weight: 600;
 }
 .likes-region:hover, .modify-region:hover, .comments-region:hover, .like-author:hover,
-.post-likes-num:hover, .post-comments-num:hover {
+.post-likes-num:hover, .post-comments-num:hover, .profile-following:hover {
     cursor: pointer;
     text-decoration: underline;
 }

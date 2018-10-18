@@ -2,10 +2,10 @@
 import { createFeed, createElement } from './helpers.js';
 // when importing 'default' exports, use below syntax
 import API from './api.js';
+const BACKEND_URL = 'http://127.0.0.1:5000';
+const STATIC_URL = 'http://localhost:8080/data';
 
-
-const api_backend = new API('http://127.0.0.1:5000');
-const STATIC_URL = 'http://localhost:8080/data'
+const api_backend = new API(BACKEND_URL);
 // we can use this single api request multiple times
 // const feed = api.getFeed();
 
@@ -31,7 +31,12 @@ export function fetch_feed(p=0, n=10) {
 let upload_file_data = null;
 export function add_element_show_post(parent, post_id = null, img_html_object = null, text_html_object = null) {
     const section = createElement('section', null, { class: 'post-post' });
-    const h3 = createElement('h3', 'Post your image');
+    let h3 = null;
+    if (post_id) {
+        h3 = createElement('h3', 'Change your post');
+    } else {
+        h3 = createElement('h3', 'Upload your post');
+    }
     const form = createElement('form', null, { class: 'post-form' });
     const text_area = createElement('textarea', null, { id: 'post-textarea', placeholder: 'Something you want to say...' });
     const upload_file = createElement('input', 'Upload your image', { id: 'upload-file-field', type: 'file', name: 'myfile' });

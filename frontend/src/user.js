@@ -1,7 +1,8 @@
 import { createElement } from './helpers.js';
-import { change_hash_location } from './main.js'
+import { change_hash_location } from './main.js';
 import API from './api.js';
-const api = new API('http://127.0.0.1:5000');
+const BACKEND_URL = 'http://127.0.0.1:5000';
+const api = new API(BACKEND_URL);
 const login_check = (username_input, password_input) => {
     // username
     const pattern1 = /^([A-Za-z0-9]{6,30})$/

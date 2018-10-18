@@ -1,5 +1,6 @@
 import { show_likes, submit_comment, show_comment, submit_like, delete_comfirm, modify_post } from './feed.js'
-const STATIC_URL = 'http://localhost:8080/data'
+
+const STATIC_URL = 'http://localhost:8080/data';
 /* returns an empty array of size max */
 export const range = (max) => Array(max).fill(null);
 

@@ -4,8 +4,9 @@ import { createElement } from './helpers.js';
 import API from './api.js';
 
 
-const api_backend = new API('http://127.0.0.1:5000');
+const BACKEND_URL = 'http://127.0.0.1:5000';
 const STATIC_URL = 'http://localhost:8080/data';
+const api_backend = new API(BACKEND_URL);
 
 
 const fetch_user_feed = (parent, posts) => {
@@ -25,10 +26,12 @@ let is_following = false;
 let followed_num = null;
 const fetch_user_info = (parent, username, id,  following_list) => {
     let user_info = null;
-    if (username)
+    if (username) {
         user_info = api_backend.getData(`user?username=${username}`, window.localStorage.getItem('AUTH_KEY'));
-    else if (id)
-        user_info = api_backend.getData(`user?Id=${id}`, window.localStorage.getItem('AUTH_KEY'));
+    }
+    else if (id) {
+        user_info = api_backend.getData(`user?id=${id}`, window.localStorage.getItem('AUTH_KEY'));
+    }
     user_info
         .then(info => {
         if ('id' in info) {
