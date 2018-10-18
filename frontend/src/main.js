@@ -38,7 +38,8 @@ const is_login = () => {
     }
 }
 const modal = document.getElementById('myModal');
-const delete_model = document.getElementById("deleteModal");
+const delete_model = document.getElementById('deleteModal');
+const modify_model = document.getElementById('modifyModal');
 // routing function
 export function change_hash_location() {
     const new_hash_location = window.location.hash.substr(1);
@@ -48,6 +49,7 @@ export function change_hash_location() {
     }
     modal.style.display = 'none';
     delete_model.style.display = 'none';
+    modify_model.style.display = 'none';
     is_login();
     if (!new_hash_location && checkStore('AUTH_KEY') !== null) {
         show_post_box();
@@ -87,9 +89,13 @@ window.onclick = function (event) {
     if (event.target === delete_model) {
         delete_model.style.display = 'none';
     }
+    if (event.target === modify_model) {
+        modify_model.style.display = 'none';
+    }
 }
 
 // logo icon click event
 document.getElementById('logo-icon').addEventListener('click', () => { if (checkStore('AUTH_KEY') !== null) window.location.hash = '#';});
 document.getElementById('login-button').addEventListener('click', () => {window.location.hash = '#'})
+document.getElementById('close-modify').addEventListener('click', () => { modify_model.style.display = 'none' })
 search_tool();

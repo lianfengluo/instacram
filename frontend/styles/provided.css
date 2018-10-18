@@ -473,10 +473,12 @@ textarea {
     border-radius: 5px;
     background-color: white;
     cursor: pointer;
+    display: block;
+    margin: 0 auto;
     height: 25px;
     font-size:20px;
     margin-top: 10px;
-    width: 90%;
+    width: 120px;
 }
 #img-container {
     width: 100%;
@@ -583,7 +585,7 @@ textarea {
 }
 
 /* Modal Content */
-#modal-content, #delete-modal-content {
+#modal-content, #delete-modal-content, #modify-modal-content {
     background-color: #fefefe;
     margin: auto;
     padding: 20px;
@@ -591,6 +593,13 @@ textarea {
     width: 80%;
 }
 #delete-modal-content {
+    /* position: absolute; */
+    top: 30%;
+}
+#modify-modal-content  {
+    top: -10%;
+}
+#delete-modal-content, #modify-modal-content {
     text-align: center;
 }
 .description-box {
@@ -608,6 +617,9 @@ textarea {
     position: relative;
 }
 /* The delete button */
+.modifyModal {
+    position: relative;
+}
 .delete {
     position: absolute;
     height: 68.5px;
@@ -619,12 +631,23 @@ textarea {
     font-size: 25px;
     font-weight: bold;
 }
-
+#close-modify {
+    position: absolute;
+    height: 68.5px;
+    display: block;
+    color: black;
+    right:10%;
+    float: right;
+    font-size: 25px;
+    font-weight: bold;
+}
+#close-modify:hover,
+#close-modify:focus,
 .delete:hover,
 .delete:focus {
-    color: #000;
-    text-decoration: none;
     cursor: pointer;
+    opacity: 0.8;
+    text-decoration: none;
 }
 
 .modify-region {

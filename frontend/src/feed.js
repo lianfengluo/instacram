@@ -29,22 +29,22 @@ export function fetch_feed(p=0, n=10) {
         });
 }
 let upload_file_data = null;
-export function show_post_box() {
-    const parent = document.getElementById('large-feed');
-    const section = createElement('section', null, { class:'post-post'});
+export function add_element_show_post(parent, post_id = null, img_html_object = null, text_html_object = null) {
+    const section = createElement('section', null, { class: 'post-post' });
     const h3 = createElement('h3', 'Post your image');
-    const form = createElement('form', null, {class: 'post-form'});
-    const text_area = createElement('textarea', null, {id: 'post-textarea', placeholder: 'Something you want to say...'});
-    const upload_file = createElement('input', 'Upload your image', { id: 'upload-file-field', type: 'file', name:'myfile'});
-    const upload_file_field = createElement('div', null, {id: 'upload-field'});
+    const form = createElement('form', null, { class: 'post-form' });
+    const text_area = createElement('textarea', null, { id: 'post-textarea', placeholder: 'Something you want to say...' });
+    const upload_file = createElement('input', 'Upload your image', { id: 'upload-file-field', type: 'file', name: 'myfile' });
+    const upload_file_field = createElement('div', null, { id: 'upload-field' });
     const upload_field_button = createElement('button', 'Choose your image');
-    const upload_file_name = createElement('div', 'No image has been chosen', {id: 'upload-img-name'});
+    const upload_file_name = createElement('div', 'No image has been chosen', { id: 'upload-img-name' });
     upload_file_field.appendChild(upload_field_button);
     upload_file_field.appendChild(upload_file_name);
-    const submit_post_button = createElement('button', null, { class: 'post-submit-button'});
+    const submit_post_button = createElement('button', null, { class: 'post-submit-button' });
     const upload_icon = createElement('img', null, {
         class: 'upload-icon', src: `${STATIC_URL}/upload-button.svg`,
-        alt: 'upload-button.svg'});
+        alt: 'upload-button.svg'
+    });
     submit_post_button.appendChild(upload_icon);
     const post_success = createElement('h3', 'Image upload succeed', { style: 'color:red; display:none', id: 'post-success-word' });
     form.appendChild(text_area);
@@ -55,13 +55,17 @@ export function show_post_box() {
     section.appendChild(h3);
     section.appendChild(form);
     parent.appendChild(section);
-    upload_field_button.addEventListener('click', (e)=>{e.preventDefault();upload_file.click();});
+    upload_field_button.addEventListener('click', (e) => { e.preventDefault(); upload_file.click(); });
     upload_file.addEventListener('change', getImageContent);
     submit_post_button.addEventListener('click', (e) => {
         e.preventDefault();
         if (text_area.value && 'src' in upload_file_data) {
             upload_file_data['description_text'] = text_area.value;
-            upload_image(upload_file_data);
+            if (post_id !== null) {
+                put_image(upload_file_data, post_id, img_html_object, text_html_object);
+            } else {
+                upload_image(upload_file_data);
+            }
             document.getElementById('upload-img-name').innerText = 'No image has been chosen';
             upload_file.value = '';
             upload_file_data = null;
@@ -71,6 +75,10 @@ export function show_post_box() {
             text_area.placeholder = 'Please input something!';
         }
     });
+}
+export function show_post_box() {
+    const parent = document.getElementById('large-feed');
+    add_element_show_post(parent);
 }
 const getImageContent = (event) => {
     const [file] = event.target.files;
@@ -116,6 +124,17 @@ const upload_image = (data) => {
     });
 }
 
+const put_image = (data, post_id, img_html_object, text_html_object) => {
+    const post_url = `post?id=${post_id}`;
+    const results = api_backend.putData(post_url, data, window.localStorage.getItem('AUTH_KEY'));
+    results.then(res => {
+        if ('message' in res && res.message === 'success') {
+            img_html_object.src = `data:image/png;base64,${data.src}`;
+            text_html_object.innerText = data.description_text;
+            document.getElementById('modifyModal').style.display = 'none';
+        }
+    });
+}
 const fetch_likes_user = (likes, parent) => {
     for (const like of likes) {
         const results = api_backend.getData(`user?id=${like}`, window.localStorage.getItem('AUTH_KEY'));
@@ -209,7 +228,7 @@ export function show_comment(comments) {
 export function delete_comfirm(post_id, section) {
     const modal = document.getElementById('deleteModal');
     modal.style.display = 'block';
-    const confirm = document.getElementById("delete-confirm-button");
+    const confirm = document.getElementById('delete-confirm-button');
     confirm.addEventListener('click', () => {
         const results = api_backend.deleteData(`post?id=${post_id}`, window.localStorage.getItem('AUTH_KEY'));
         results
@@ -220,4 +239,13 @@ export function delete_comfirm(post_id, section) {
                 }
             })
     })
+}
+
+export function modify_post(post_id, post_src, post_text) {
+    const parent = document.getElementById('modify-modal-content');
+    document.getElementById('modifyModal').style.display = 'block';
+    while (parent.firstChild) {
+        parent.removeChild(parent.firstChild);
+    }
+    add_element_show_post(parent, post_id, post_src, post_text);
 }

@@ -1,5 +1,5 @@
 // importing named exports we use brackets
-import { createElement, createFeed } from './helpers.js';
+import { createFeed } from './helpers.js';
 // when importing 'default' exports, use below syntax
 import API from './api.js';
 const api_backend = new API('http://127.0.0.1:5000');
