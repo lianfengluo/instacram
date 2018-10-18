@@ -4,7 +4,7 @@ import { fetch_feed, show_post_box, fetch_more, newfeedmessage, reset_post_id } 
 import { login_form_show, register_form_show } from './user.js';
 import { show_profile } from './profile.js';
 import { show_error, show_expired, no_user_error } from './error_page.js';
-import { show_user_page, search_tool, show_user_page_id } from './userpage.js';
+import { show_user_page, search_tool, show_user_page_id, reset_follow } from './userpage.js';
 import { show_post_detail } from './posts.js';
 
 
@@ -48,6 +48,7 @@ export function change_hash_location() {
         parent.removeChild(parent.firstChild);
     }
     reset_post_id();
+    reset_follow();
     modal.style.display = 'none';
     delete_model.style.display = 'none';
     modify_model.style.display = 'none';

@@ -254,9 +254,15 @@ button:hover {
     color:rgb(17, 15, 15);
     border-radius: 10%;
 }
-#login-button, #profile-button, #my-post-button {
+#login-button {
     width:100px; 
     max-width:100px; 
+    margin:10px;
+}
+#profile-button, #my-post-button {
+    max-width: 90px;
+    min-width: 85px;
+    font-size: 15px !important;
     margin:10px;
 }
 #logout-button {
@@ -308,6 +314,7 @@ button:hover {
     margin: 30px auto;
     background-color: white;
     border: 1px solid rgba(0,0,0,.0975);
+    border-radius: 10px;
 }
 .post-form {
     width: 95%;
@@ -317,10 +324,10 @@ button:hover {
 #post-textarea {
     resize: none;
     width: 90%;
-    font-size: 20px;
-    height: 300px;
+    font-size: 15px !important;
+    height: 200px;
     border: 1px inset rgba(0,0,0,.0975);
-    border-radius: 3px;
+    border-radius: 5px;
 }
 #upload-file-field {
     display: none;
@@ -519,7 +526,6 @@ textarea {
     margin: auto;
     font-size: 15px;
     height: 40px;
-    display: none;
     text-align: center;
     margin-bottom: 10px;
 }

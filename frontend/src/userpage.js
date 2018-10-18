@@ -85,7 +85,9 @@ const fetch_all = (user_info, username, id) => {
             }
         })
 }
-
+export function reset_follow() {
+    is_following = false;
+}
 
 const follow_event = (username, follow_button, followed) => {
     if (is_following === true) {

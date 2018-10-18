@@ -91,14 +91,17 @@ export function createFeed(post) {
     likes_count_div.addEventListener('click', () => {
         show_likes(post.meta.likes);
     })
-    const comment_div = createElement('div', null, {class: 'comment-area'});
+    const comment_div = createElement('div', null, { class: 'comment-area', style: 'display: none;'});
     const comment_input = createElement('input', null, { class: 'comment-input', placeholder:'Input your comment' });
     const comment_submit_button = createElement('button', 'comment', {class: 'comment-button'});
     comment_div.appendChild(comment_input);
     comment_div.appendChild(comment_submit_button);
     section.appendChild(comment_div);
     comments_box.addEventListener('click', () => {
-        comment_div.style.display = 'inline-block';
+        if (comment_div.style.display === 'none')
+            comment_div.style.display = 'inline-block';
+        else
+            comment_div.style.display = 'none';
     });
     comment_submit_button.addEventListener('click', () => {
         submit_comment(comment_input.value, window.localStorage.getItem('name'), post.id, comments_num, comment_input, post.comments);

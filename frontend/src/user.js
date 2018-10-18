@@ -5,7 +5,7 @@ import API from './api.js';
 const api = new API(BACKEND_URL);
 const login_check = (username_input, password_input) => {
     // username
-    const pattern1 = /^([A-Za-z0-9]{6,30})$/
+    const pattern1 = /^([A-Za-z0-9-_+]{6,30})$/
     // password
     const pattern2 = /^(.{6,30})$/
     if (pattern1.test(username_input.value) && pattern2.test(password_input.value)) {
@@ -66,7 +66,7 @@ export function login_form_show()  {
 
 const register_check = (username_input, password_input, confirm_password_input, email_input, name_input) => {
     // username
-    const pattern1 = /^([A-Za-z0-9]{6,30})$/
+    const pattern1 = /^([A-Za-z0-9-_+]{6,30})$/
     // password
     const pattern2 = /^(.{6,30})$/
     // email
