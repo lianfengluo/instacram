@@ -1,16 +1,17 @@
 // importing named exports we use brackets
 import { createFeed, createElement } from './helpers.js';
-// when importing 'default' exports, use below syntax
 import API from './api.js';
+// when importing 'default' exports, use below syntax
+
+
 const BACKEND_URL = 'http://127.0.0.1:5000';
 const STATIC_URL = 'http://localhost:8080/data';
-
 const api_backend = new API(BACKEND_URL);
 // we can use this single api request multiple times
 // const feed = api.getFeed();
 
-let post_num = 0
-
+let post_num = 0;
+let first_post_id = null;
 export function fetch_feed(p=0, n=10) {
     const feed = api_backend.getData(`user/feed?p=${p}&n=${n}`, window.localStorage.getItem('AUTH_KEY'));
     feed
@@ -18,7 +19,9 @@ export function fetch_feed(p=0, n=10) {
             if ('posts' in posts) {
                 if (posts.posts.length > 0) {
                     posts.posts.reduce((parent, post) => {
-                        ++post_num;
+                        if (post_num++ === 0){
+                            first_post_id = post.id;
+                        }
                         parent.appendChild(createFeed(post));
                         return parent;
                     }, document.getElementById('large-feed'))
@@ -124,6 +127,7 @@ const upload_image = (data) => {
             const post_success = document.getElementById('post-success-word');
             post_success.style.display = 'block';
             document.getElementById('preview-image');
+            localStorage['posts'] += `,${result.post_id}`;
             setTimeout(() => {
                 post_success.style.display = 'none';
             }, 2000);
@@ -256,7 +260,39 @@ export function modify_post(post_id, post_src, post_text) {
     }
     add_element_show_post(parent, post_id, post_src, post_text);
 }
+export function reset_post_id() {
+    post_num = 0;
+}
+export function fetch_more() {
+    fetch_feed(post_num);
+}
 
-export function fetch_update() {
-
+export function newfeedmessage() {
+    const parent = document.getElementById('large-feed');
+    const feed = api_backend.getData('user/feed?p=0&n=1', window.localStorage.getItem('AUTH_KEY'));
+    feed
+        .then(posts => {
+            if ('posts' in posts) {
+                if (posts.posts.length > 0) {
+                    if (posts.posts[0].id !== first_post_id) {
+                        // new feed comes
+                        if (!document.getElementById('notification')) {
+                            const notification = createElement('div', 'You have new messages', {id: 'notification'});
+                            notification.addEventListener('click', () => {
+                                post_num = 0;
+                                while (parent.childNodes[1]) {
+                                    parent.removeChild(parent.childNodes[1]);
+                                }
+                                fetch_feed();
+                            });
+                            parent.insertBefore(notification, parent.childNodes[1])
+                        }
+                    } 
+                }
+            } else if ('message' in posts) {
+                if (posts.message === 'Invalid Authorization Token') {
+                    window.location.hash = '#expired';
+                }
+            }
+        });
 }

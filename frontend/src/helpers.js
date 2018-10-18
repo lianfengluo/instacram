@@ -38,12 +38,13 @@ export function createElement(tag, data, options = {}) {
  * @returns {HTMLElement}
  */
 export function createFeed(post) {
-    const section = createElement('section', null, { class: 'post' });
+    const section = createElement('section', null, { class: 'post' , id: `post-${post.id}`});
     const post_heading = createElement('div', null, { class: 'post-heading' });
     const author_name = createElement('h2', post.meta.author, { class: 'post-title' });
     post_heading.appendChild(author_name);
     // check if the author
-    if (window.localStorage.getItem('posts').includes(post.id)) {
+    const posts_array = window.localStorage.getItem('posts').split(',');
+    if (posts_array.includes(post.id.toString())) {
         const close = createElement('span', null, { class: 'delete' })
         close.innerHTML = '&times;'
         close.addEventListener('click', () => {

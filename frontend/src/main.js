@@ -1,6 +1,6 @@
 // importing named exports we use brackets
 import { checkStore } from './helpers.js';
-import { fetch_feed, show_post_box, fetch_update } from './feed.js';
+import { fetch_feed, show_post_box, fetch_more, newfeedmessage, reset_post_id } from './feed.js';
 import { login_form_show, register_form_show } from './user.js';
 import { show_profile } from './profile.js';
 import { show_error, show_expired, no_user_error } from './error_page.js';
@@ -49,6 +49,7 @@ export function change_hash_location() {
     while (parent.firstChild) {
         parent.removeChild(parent.firstChild);
     }
+    reset_post_id();
     modal.style.display = 'none';
     delete_model.style.display = 'none';
     modify_model.style.display = 'none';
@@ -101,9 +102,21 @@ document.getElementById('logo-icon').addEventListener('click', () => { if (check
 document.getElementById('login-button').addEventListener('click', () => {window.location.hash = '#'})
 document.getElementById('close-modify').addEventListener('click', () => { modify_model.style.display = 'none' })
 search_tool();
+let offset_height = null;
+let window_height = null
+let prev_height = 0;
+window.setInterval(() => {
+    offset_height = (window.pageYOffset || document.body.scrollTop) - (document.body.clientTop || 0);
+    window_height = document.body.scrollHeight - document.body.offsetHeight;
+    if ((window.location.hash === '#' || !window.location.hash) && checkStore('AUTH_KEY') !== null
+        && offset_height > 0.85 * window_height && window_height != prev_height) {
+        prev_height = window_height;
+        fetch_more();
+    }
+}, 2000);
 
-// window.addEventListener('scroll', () => {
-//     if () {
-//         fetch_update();
-//     }
-// });
+window.setInterval(() => {
+    if ((window.location.hash === '#' || !window.location.hash) && checkStore('AUTH_KEY') !== null) {
+        newfeedmessage();
+    }
+}, 4000);
