@@ -15,7 +15,7 @@ const fetch_user_feed = (parent, posts) => {
         const img = createElement('img', null, { alt: `img ${post_id}`, id: `img-${post_id}`, 
             class: 'post-image' , src: `${STATIC_URL}/blank.png` });
         user_info
-            .then(info => { img.src = 'data:image/png;base64,' + info.thumbnail})
+            .then(info => { img.src = 'data:image/png;base64,' + info.src})
         img.addEventListener('click', () => {;
             window.location.hash = `#post=${post_id}`;
         });

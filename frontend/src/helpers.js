@@ -52,7 +52,7 @@ export function createFeed(post) {
         post_heading.appendChild(close);
     }
     section.appendChild(post_heading);
-    const post_img = createElement('img', null, { src: `data:image/png;base64,${post.thumbnail}`,
+    const post_img = createElement('img', null, { src: `data:image/png;base64,${post.src}`,
         alt: post.meta.description_text, class: 'post-image' 
     })
     section.appendChild(post_img);

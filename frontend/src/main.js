@@ -1,6 +1,6 @@
 // importing named exports we use brackets
 import { checkStore } from './helpers.js';
-import { fetch_feed, show_post_box } from './feed.js';
+import { fetch_feed, show_post_box, fetch_update } from './feed.js';
 import { login_form_show, register_form_show } from './user.js';
 import { show_profile } from './profile.js';
 import { show_error, show_expired, no_user_error } from './error_page.js';
@@ -101,3 +101,9 @@ document.getElementById('logo-icon').addEventListener('click', () => { if (check
 document.getElementById('login-button').addEventListener('click', () => {window.location.hash = '#'})
 document.getElementById('close-modify').addEventListener('click', () => { modify_model.style.display = 'none' })
 search_tool();
+
+// window.addEventListener('scroll', () => {
+//     if () {
+//         fetch_update();
+//     }
+// });

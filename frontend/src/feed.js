@@ -9,6 +9,7 @@ const api_backend = new API(BACKEND_URL);
 // we can use this single api request multiple times
 // const feed = api.getFeed();
 
+let post_num = 0
 
 export function fetch_feed(p=0, n=10) {
     const feed = api_backend.getData(`user/feed?p=${p}&n=${n}`, window.localStorage.getItem('AUTH_KEY'));
@@ -17,6 +18,7 @@ export function fetch_feed(p=0, n=10) {
             if ('posts' in posts) {
                 if (posts.posts.length > 0) {
                     posts.posts.reduce((parent, post) => {
+                        ++post_num;
                         parent.appendChild(createFeed(post));
                         return parent;
                     }, document.getElementById('large-feed'))
@@ -253,4 +255,8 @@ export function modify_post(post_id, post_src, post_text) {
         parent.removeChild(parent.firstChild);
     }
     add_element_show_post(parent, post_id, post_src, post_text);
+}
+
+export function fetch_update() {
+
 }
