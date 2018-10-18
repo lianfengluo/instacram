@@ -33,7 +33,7 @@ export function fetch_feed(p=0, n=10) {
             }
         });
 }
-let upload_file_data = null;
+let upload_file_data = {};
 export function add_element_show_post(parent, post_id = null, img_html_object = null, text_html_object = null) {
     const section = createElement('section', null, { class: 'post-post' });
     let h3 = null;
@@ -78,7 +78,7 @@ export function add_element_show_post(parent, post_id = null, img_html_object = 
             }
             document.getElementById('upload-img-name').innerText = 'No image has been chosen';
             upload_file.value = '';
-            upload_file_data = null;
+            upload_file_data = {};
             text_area.value = '';
             text_area.placeholder = 'Something you want to say...';
         } else if (!text_area.value) {
