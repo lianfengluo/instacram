@@ -69,6 +69,7 @@ footer {
     padding: 20px 40px;
     margin: 0;
     border-bottom: 1px solid rgba(0,0,0,.0975);
+    display: inline-block;
 }
 .post-title:hover {
     text-decoration: underline;
@@ -86,6 +87,7 @@ footer {
     vertical-align: baseline;
     color: rgba(26, 25, 25, 0.452);
     align-items: stretch;
+    float:right;
 }
 .post-box {
     overflow: hidden;
@@ -465,6 +467,17 @@ textarea {
     margin-top: 10px;
     width: 90%;
 }
+#delete-confirm-button {
+    border: 1px solid #dbdbdb;
+    color: #262626;
+    border-radius: 5px;
+    background-color: white;
+    cursor: pointer;
+    height: 25px;
+    font-size:20px;
+    margin-top: 10px;
+    width: 90%;
+}
 #img-container {
     width: 100%;
     margin: 0 auto;
@@ -539,19 +552,20 @@ textarea {
 .comment-box > div {
     display: inline-block;
 }
-.comments-region {
+.likes-region, .modify-region, .comments-region {
     width: 100%;
 }
-.comments-region:hover {
+.modify-region {
+    margin-top: 5px;
+    font-weight: 600;
+}
+.likes-region:hover, .modify-region:hover, .comments-region:hover, .like-author:hover,
+.post-likes-num:hover, .post-comments-num:hover {
     cursor: pointer;
     text-decoration: underline;
 }
-.likes-region {
-    width: 100%;
-}
-.likes-region:hover {
+.post-image:hover {
     cursor: pointer;
-    text-decoration: underline;
 }
 /* The Modal (background) */
 .modal {
@@ -569,25 +583,50 @@ textarea {
 }
 
 /* Modal Content */
-#modal-content {
+#modal-content, #delete-modal-content {
     background-color: #fefefe;
     margin: auto;
     padding: 20px;
     border: 1px solid #ccc;
     width: 80%;
 }
-
-/* The Close Button */
-.close {
-    color: white;
+#delete-modal-content {
+    text-align: center;
+}
+.description-box {
+    width: 100%;
+    font-size: 22px;
+    display: inline-block;
+}
+.description-box > div {
+    display:inline-block;
+}
+.description-box > b {
+    margin-right: 10px;
+}
+.post-heading {
+    position: relative;
+}
+/* The delete button */
+.delete {
+    position: absolute;
+    height: 68.5px;
+    display: inline-block;
+    color: black;
+    right:5px;
+    top:25%;
     float: right;
-    font-size: 28px;
+    font-size: 25px;
     font-weight: bold;
 }
 
-.close:hover,
-.close:focus {
+.delete:hover,
+.delete:focus {
     color: #000;
     text-decoration: none;
     cursor: pointer;
+}
+
+.modify-region {
+    width: 100%;
 }

@@ -1,4 +1,4 @@
-import { show_likes, submit_comment, show_comment, submit_like } from "./feed.js"
+import { show_likes, submit_comment, show_comment, submit_like, delete_comfirm } from './feed.js'
 const STATIC_URL = 'http://localhost:8080/data'
 /* returns an empty array of size max */
 export const range = (max) => Array(max).fill(null);
@@ -38,54 +38,76 @@ export function createElement(tag, data, options = {}) {
  */
 export function createFeed(post) {
     const section = createElement('section', null, { class: 'post' });
+    const post_heading = createElement('div', null, { class: 'post-heading' });
     const author_name = createElement('h2', post.meta.author, { class: 'post-title' });
-    section.appendChild(author_name);
-    author_name.addEventListener("click", () => {
-        window.location.hash = `#userid=${post.id}`;
+    post_heading.appendChild(author_name);
+    // check if the author
+    if (window.localStorage.getItem('posts').includes(post.id)) {
+        const close = createElement('span', null, { class: 'delete' })
+        close.innerHTML = '&times;'
+        close.addEventListener('click', () => {
+            delete_comfirm(post.id, section);
+        })
+        post_heading.appendChild(close);
+    }
+    section.appendChild(post_heading);
+    const post_img = createElement('img', null, { src: `data:image/png;base64,${post.thumbnail}`,
+        alt: post.meta.description_text, class: 'post-image' 
     })
-    section.appendChild(createElement('img', null, 
-    { src: `data:image/png;base64,${post.thumbnail}`,
-     alt: post.meta.description_text, class: 'post-image' 
-    }));
-    section.appendChild(createElement("p", null, { class: "post-description_text"}));
-    const section_box = createElement("section", null, {class: "post-box"});
-    const comments_box = createElement("div", null, { class: "post-comments-box" });
-    comments_box.appendChild(createElement("img", null, {alt:"comments icon", class:"comments-icon", src: `${STATIC_URL}/blogging.svg`}))
-    const like_box = createElement("div", null, { class: "post-likes-box" });
-    like_box.appendChild(createElement("img", null, {alt:"likes icon", class:"likes-icon", src: `${STATIC_URL}/like.svg`}))
+    section.appendChild(post_img);
+    post_img.addEventListener('click', () => {
+        window.location.hash = `#post=${post.id}`;
+    });
+    section.appendChild(createElement('p', null, { class: 'post-description_text'}));
+    const section_box = createElement('section', null, {class: 'post-box'});
+    const comments_box = createElement('div', null, { class: 'post-comments-box' });
+    comments_box.appendChild(createElement('img', null, {alt:'comments icon', class:'comments-icon', src: `${STATIC_URL}/blogging.svg`}))
+    const like_box = createElement('div', null, { class: 'post-likes-box' });
+    const like_icon = createElement('img', null, { alt: 'likes icon', class: 'likes-icon', src: `${STATIC_URL}/like.png` });
+    like_box.appendChild(like_icon);
+    if (post.meta.likes.includes(parseInt(window.localStorage.getItem('id')))) {
+        like_icon.src = `${STATIC_URL}/liked.png`;
+    }
     section_box.appendChild(comments_box);
     section_box.appendChild(like_box);
     section.appendChild(section_box);
-    like_box.addEventListener("click", () => {
-        submit_like(post.likes);
-    })
-    section.appendChild(createElement("p", `${post.meta.likes.length} likes`, { class: "post-likes-num" }));
-    const comments_num = createElement("p", `${post.comments.length} comments`, { class: "post-comments-num" });
+    const likes_count_div = createElement('p', `${post.meta.likes.length} likes`, { class: 'post-likes-num' });
+    section.appendChild(likes_count_div);
+        like_box.addEventListener('click', () => {
+            submit_like(post.meta.likes, post.id, likes_count_div, like_icon);
+        })
+    const comments_num = createElement('p', `${post.comments.length} comments`, { class: 'post-comments-num' });
     section.appendChild(comments_num);
-    // section.appendChild(createElement("i", getDateString(post.meta.published), { class: "post-pushlished-time"}));
-    section.appendChild(createElement("i", getDate(post.meta.published), { class: "post-pushlished-time"}));
-    const comments_region = createElement("div", "show comments", {class: "comments-region"});
-    section.appendChild(comments_region);
-    comments_region.addEventListener("click", () => {
+    const description = createElement('div', null, { class:'description-box' });
+    const author_b = createElement('b', post.meta.author);
+    const text = createElement('div', post.meta.description_text);
+    description.appendChild(author_b);
+    description.appendChild(text);
+    section.appendChild(description);
+    comments_num.addEventListener('click', () => {
         show_comment(post.comments);
     })
-    const likes_region = createElement("div", "show likes", { class: "likes-region" });
-    section.appendChild(likes_region);
-    likes_region.addEventListener("click", () => {
-        show_likes(post.likes);
+    likes_count_div.addEventListener('click', () => {
+        show_likes(post.meta.likes);
     })
-    const comment_div = createElement("div", null, {class: "comment-area"});
-    const comment_input = createElement("input", null, { class: "comment-input", placeholder:"Input your comment" });
-    const comment_submit_button = createElement("button", "comment", {class: "comment-button"});
+    const comment_div = createElement('div', null, {class: 'comment-area'});
+    const comment_input = createElement('input', null, { class: 'comment-input', placeholder:'Input your comment' });
+    const comment_submit_button = createElement('button', 'comment', {class: 'comment-button'});
     comment_div.appendChild(comment_input);
     comment_div.appendChild(comment_submit_button);
     section.appendChild(comment_div);
-    comments_box.addEventListener("click", () => {
-        comment_div.style.display = "inline-block";
+    comments_box.addEventListener('click', () => {
+        comment_div.style.display = 'inline-block';
     });
-    comment_submit_button.addEventListener("click", () => {
-        submit_comment(comment_input.value, window.localStorage.getItem("name"), post.id, comments_num, comment_input, post.comments);
+    comment_submit_button.addEventListener('click', () => {
+        submit_comment(comment_input.value, window.localStorage.getItem('name'), post.id, comments_num, comment_input, post.comments);
     })
+    if (window.localStorage.getItem('posts').includes(post.id)) {
+        const modify = createElement('div', 'Modify this post', { class: 'modify-region' });
+        section.appendChild(createElement('hr', null));
+        section.appendChild(modify);
+    }
+    section.appendChild(createElement('i', getDate(post.meta.published), { class: 'post-pushlished-time' }));
     return section;
 }
 
@@ -112,7 +134,7 @@ export function checkStore(key) {
  */
 const addZero = (i) => {
     if (i < 10) {
-        i = "0" + i;
+        i = '0' + i;
     }
     return i;
 }
@@ -131,6 +153,6 @@ const getDate = (string) => {
     let m = addZero(date.getMinutes());
     let s = addZero(date.getSeconds());
 
-    const new_date = h + ":" + m + ":" + s + ' ' + mm + '/' + dd + '/' + yyyy;
+    const new_date = h + ':' + m + ':' + s + ' ' + mm + '/' + dd + '/' + yyyy;
     return new_date
 }

@@ -1,6 +1,9 @@
-12/10/18    12:00pm     18:15pm   read the doc and set up frontend and backend start to do the login model
-13/10/18    12:00pm     18:15pm   change the url as hash url and develop the post section and keep doing login model
+12/10/18    12:00pm     18:15pm     read the doc and set up frontend and backend start to do the login model
+13/10/18    12:00pm     18:15pm     change the url as hash url and develop the post section and keep doing login model
 13/10/18    9:00am      4:30pm      doing the signup ui and api interaction and doing the posting feed ui and interaction
 14/10/18    9:00am      1:30pm      doing post image function, ui and send request to the backend
-15/10/18    9:00am      12:00am      doing the pofile page, ui and get info from backend
-16/10/18    12:00pm     4:00pm        doing the update profile function
+15/10/18    9:00am      12:00am     doing the pofile page, ui and get info from backend
+16/10/18    12:00pm     4:00pm      doing the update profile function
+17/10/18    12:00pm     6:00pm      doing the user page, follow, unfollow
+18/10/18    12:00am     1:00am      doing the comment, like model
+18/10/18    9:00am      1:30pm      keep doing comment, like model, post page with and delete post model
