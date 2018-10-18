@@ -69,13 +69,16 @@ export function add_element_show_post(parent, post_id = null, img_html_object = 
     upload_file.addEventListener('change', getImageContent);
     submit_post_button.addEventListener('click', (e) => {
         e.preventDefault();
-        if (text_area.value && 'src' in upload_file_data) {
-            upload_file_data['description_text'] = text_area.value;
-            if (post_id !== null) {
-                put_image(upload_file_data, post_id, img_html_object, text_html_object);
-            } else {
-                upload_image(upload_file_data);
-            }
+        upload_file_data['description_text'] = text_area.value;
+        if (post_id !== null) {
+            put_image(upload_file_data, post_id, img_html_object, text_html_object);
+            document.getElementById('upload-img-name').innerText = 'No image has been chosen';
+            upload_file.value = '';
+            upload_file_data = {};
+            text_area.value = '';
+            text_area.placeholder = 'Something you want to say...';
+        } else if (text_area.value && 'src' in upload_file_data) {
+            upload_image(upload_file_data);
             document.getElementById('upload-img-name').innerText = 'No image has been chosen';
             upload_file.value = '';
             upload_file_data = {};
