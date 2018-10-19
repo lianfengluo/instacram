@@ -390,11 +390,7 @@ export function newfeedmessage() {
                             const notification = createElement('div', 'You have new messages', {id: 'notification'});
                             notification.addEventListener('click', () => {
                                 post_num = 0;
-                                while (parent.childNodes[1]) {
-                                    parent.removeChild(parent.childNodes[1]);
-                                }
-                                fetch_feed();
-                                return true;
+                                window.location.reload();
                             });
                             parent.insertBefore(notification, parent.childNodes[1])
                         }

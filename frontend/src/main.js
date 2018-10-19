@@ -130,10 +130,6 @@ window.setInterval(() => {
 */
 window.setInterval(() => {
     if ((window.location.hash === '#' || !window.location.hash) && checkStore('AUTH_KEY') !== null) {
-        let is_load = newfeedmessage();
-        is_load.then(value => {
-            if (value === true)
-                reset_height();
-        })
+        newfeedmessage();
     }
 }, 5000);
