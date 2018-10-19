@@ -93,6 +93,12 @@ export function add_element_show_post(parent, post_id = null, img_html_object = 
         if (text_area.value)
             upload_file_data['description_text'] = text_area.value;
         if (post_id !== null) {
+            if (!('src' in upload_file_data)) {
+                upload_file_data['src'] = img_html_object.src.split(',')[1];
+            }
+            if (!('description_text' in upload_file_data)) {
+                upload_file_data['description_text'] = text_html_object.innerText;
+            }
             put_image(upload_file_data, post_id, img_html_object, text_html_object);
             upload_file_name.innerText = 'No image has been chosen';
             upload_file.value = '';
