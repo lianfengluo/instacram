@@ -35,7 +35,9 @@ const backendURL = [
     `${BACKEND_URL}/user/follow`,
     `${BACKEND_URL}/user/unfollow`,
 ]
-
+/**
+ * initialize the service
+  */
 self.addEventListener('install', (e) => {
     e.waitUntil(
         caches.open(mycache)
@@ -44,6 +46,9 @@ self.addEventListener('install', (e) => {
             })
     )
 })
+/**
+ * remove action
+  */
 self.addEventListener('activate', (e) => {
     e.waitUntil(
         caches.keys().then((cacheNames) => {
@@ -56,6 +61,10 @@ self.addEventListener('activate', (e) => {
         })
     )
 })
+/**
+ * fetch action
+ * from cache
+  */
 self.addEventListener('fetch', (e) => {
     e.respondWith(
         caches.match(e.request).then((response) => {

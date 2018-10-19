@@ -2,7 +2,7 @@ import { createElement, checkStore } from './helpers.js';
 import { change_hash_location } from './main.js';
 import { show_likes } from './feed.js';
 import { BACKEND_URL } from './global_var.js';
-import { clearAllCaches } from './serviceWorker.js';
+
 
 import API from './api.js';
 
@@ -118,7 +118,7 @@ export function show_profile() {
     logout_button.addEventListener('click', () => {
         if (checkStore('AUTH_KEY') !== null) {
             localStorage.clear();
-            clearAllCaches();
+            // clearAllCaches();
         }
         window.location.hash = '#';
         change_hash_location();

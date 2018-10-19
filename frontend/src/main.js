@@ -7,17 +7,19 @@ import { show_error, show_expired, no_user_error } from './error_page.js';
 import { show_user_page, search_tool, show_user_page_id } from './userpage.js';
 import { show_post_detail } from './posts.js';
 
-if ('serviceWorker' in navigator) {
-    navigator.serviceWorker
-        .register('./src/serviceWorker.js')
-        .then(() => {
+// if ('serviceWorker' in navigator) {
+//     navigator.serviceWorker
+//         .register('./src/serviceWorker.js')
+//         .then(() => {
 
-        })
-        .catch((err) => {
-            console.warn('Service Worker Failed to Register', err);
-        })
-}
-
+//         })
+//         .catch((err) => {
+//             console.warn('Service Worker Failed to Register', err);
+//         })
+// }
+let offset_height = null;
+let window_height = null
+let prev_height = 0;
 // nav tool event and check login
 const is_login = () => {
     const profile_button = document.getElementById('profile-button');
@@ -57,6 +59,9 @@ export function change_hash_location() {
     while (parent.firstChild) {
         parent.removeChild(parent.firstChild);
     }
+    offset_height = null;
+    window_height = null
+    prev_height = 0;
     reset_post_id();
     modal.style.display = 'none';
     delete_model.style.display = 'none';
@@ -110,9 +115,7 @@ document.getElementById('logo-icon').addEventListener('click', () => { if (check
 document.getElementById('login-button').addEventListener('click', () => {window.location.hash = '#'})
 document.getElementById('close-modify').addEventListener('click', () => { modify_model.style.display = 'none' })
 search_tool();
-let offset_height = null;
-let window_height = null
-let prev_height = 0;
+
 /**
  * listener the getting more and more image
 */
