@@ -4,7 +4,7 @@ import { fetch_feed, show_post_box, fetch_more, newfeedmessage, reset_post_id } 
 import { login_form_show, register_form_show } from './user.js';
 import { show_profile } from './profile.js';
 import { show_error, show_expired, no_user_error } from './error_page.js';
-import { show_user_page, search_tool, show_user_page_id, reset_follow } from './userpage.js';
+import { show_user_page, search_tool, show_user_page_id } from './userpage.js';
 import { show_post_detail } from './posts.js';
 
 
@@ -48,7 +48,6 @@ export function change_hash_location() {
         parent.removeChild(parent.firstChild);
     }
     reset_post_id();
-    reset_follow();
     modal.style.display = 'none';
     delete_model.style.display = 'none';
     modify_model.style.display = 'none';
@@ -104,6 +103,9 @@ search_tool();
 let offset_height = null;
 let window_height = null
 let prev_height = 0;
+/**
+ * listener the getting more and more image
+*/
 window.setInterval(() => {
     offset_height = (window.pageYOffset || document.body.scrollTop) - (document.body.clientTop || 0);
     window_height = document.body.scrollHeight - document.body.offsetHeight;
@@ -114,8 +116,11 @@ window.setInterval(() => {
     }
 }, 2000);
 
+/**
+ * listener the getting notification
+*/
 window.setInterval(() => {
     if ((window.location.hash === '#' || !window.location.hash) && checkStore('AUTH_KEY') !== null) {
         newfeedmessage();
     }
-}, 4000);
+}, 5000);

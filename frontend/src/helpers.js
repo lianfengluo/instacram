@@ -47,7 +47,7 @@ export function createFeed(post) {
         const close = createElement('span', null, { class: 'delete' })
         close.innerHTML = '&times;'
         close.addEventListener('click', () => {
-            delete_comfirm(post.id, section);
+            delete_comfirm(post.id);
         })
         post_heading.appendChild(close);
     }

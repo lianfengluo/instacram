@@ -3,9 +3,9 @@ import { createElement } from './helpers.js';
  * show error function is redirect user to a error page
  */
 export function show_error() {
-    const parent = document.getElementById("large-feed");
-    const error_message = createElement("div", null, {class:"error-message"});
-    const error = createElement("h1", "Invalid url")
+    const parent = document.getElementById('large-feed');
+    const error_message = createElement('div', null, {class:'error-message'});
+    const error = createElement('h1', 'Invalid url')
     error_message.appendChild(error);
     parent.appendChild(error_message);
 }
@@ -14,14 +14,14 @@ export function show_error() {
  * and clear the localstorage to let user login again
  */
 export function show_expired() {
-    const parent = document.getElementById("large-feed");
-    const error_message = createElement("div", null, { class: "error-message" });
-    const error = createElement("h1", "Token expired. The page will be redirect in 3s")
+    const parent = document.getElementById('large-feed');
+    const error_message = createElement('div', null, { class: 'error-message' });
+    const error = createElement('h1', 'Token expired. The page will be redirect in 3s')
     error_message.appendChild(error);
     parent.appendChild(error_message);
     setTimeout(() => {
         window.localStorage.clear();
-        window.location.hash = "#";
+        window.location.hash = '#';
     }, 3000);
 }
 /**
@@ -30,9 +30,9 @@ export function show_expired() {
  * it will redirect back to the previous page
  */
 export function no_user_error() {
-    const parent = document.getElementById("large-feed");
-    const error_message = createElement("div", null, { class: "error-message" });
-    const error = createElement("h1", "Invalid username. The page will be redirect in 2s")
+    const parent = document.getElementById('large-feed');
+    const error_message = createElement('div', null, { class: 'error-message' });
+    const error = createElement('h1', 'Invalid username. The page will be redirect in 2s')
     error_message.appendChild(error);
     parent.appendChild(error_message);
     setTimeout(() => {

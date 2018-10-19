@@ -157,7 +157,10 @@ const getImageContent = (event) => {
     // this returns a base64 image
     reader.readAsDataURL(file);
 }
-
+/**
+ * function for posting the posts to the backend
+ * @param {object} data the data we want to upload 
+ */
 const upload_image = (data) => {
     const post_url = 'post/';
     const results = api_backend.postData(post_url, data, window.localStorage.getItem('AUTH_KEY'));
@@ -179,7 +182,13 @@ const upload_image = (data) => {
         }
     });
 }
-
+/**
+ * function for updating the posts to the backend
+ * @param {object} data  the data we want to update
+ * @param {number} post_id the post id we want to update
+ * @param {htmlNode} img_html_object change the image object when update is success
+ * @param {htmlNode} text_html_object  change the text description object when update is success
+ */
 const put_image = (data, post_id, img_html_object, text_html_object) => {
     const post_url = `post?id=${post_id}`;
     const results = api_backend.putData(post_url, data, window.localStorage.getItem('AUTH_KEY'));
@@ -191,6 +200,11 @@ const put_image = (data, post_id, img_html_object, text_html_object) => {
         }
     });
 }
+/**
+ * fecth the info of the user that like this post
+ * @param {list} likes a list of user id
+ * @param {htmlNode} parent the new post in the likes area
+ */
 const fetch_likes_user = (likes, parent) => {
     for (const like of likes) {
         const results = api_backend.getData(`user?id=${like}`, window.localStorage.getItem('AUTH_KEY'));
@@ -206,7 +220,10 @@ const fetch_likes_user = (likes, parent) => {
             })
     }
 }
-
+/**
+ * show all the likes in the page
+ * @param {list} likes a list user id that likes this posts
+ */
 export function show_likes(likes) {
     const parent = document.getElementById('modal-content');
     document.getElementById('myModal').style.display = 'block';
@@ -216,6 +233,13 @@ export function show_likes(likes) {
     parent.appendChild(createElement('h3', 'Likes:'));
     fetch_likes_user(likes, parent);
 }
+/**
+ * function that will handle event that when user likes this post
+ * @param {list} likes a list user id that likes this posts
+ * @param {number} post_id the post id we want to update
+ * @param {htmlNode} likes_count_div update the like count without refresh
+ * @param {htmlNode} like_box update the like icon without refresh
+ */
 export function submit_like(likes, post_id, likes_count_div, like_box) {
     const my_post_id = parseInt(window.localStorage.getItem('id'));
     if (likes.includes(my_post_id)) {
@@ -243,7 +267,16 @@ export function submit_like(likes, post_id, likes_count_div, like_box) {
             })
     }
 }
-
+/**
+ * function that will handle event that when user submit comment on this post
+ * update the comment count without refresh
+ * @param {string} comment 
+ * @param {string} author 
+ * @param {number} post_id 
+ * @param {htmlNode} comments_num 
+ * @param {htmlNode} comment_input 
+ * @param {htmlNode} coment_list 
+ */
 export function submit_comment(comment, author, post_id, comments_num, comment_input, coment_list) {
     const timestamp = new Date().getTime() / 1000;
     const data = { author: author, comment: comment, published: timestamp };
@@ -260,7 +293,10 @@ export function submit_comment(comment, author, post_id, comments_num, comment_i
         })
 }
 
-
+/**
+ * show the command of the posts
+ * @param {htmlNode} comments 
+ */
 export function show_comment(comments) {
     const parent = document.getElementById('modal-content');
     document.getElementById('myModal').style.display = 'block';
@@ -281,7 +317,12 @@ export function show_comment(comments) {
     }, parent);
 }
 
-export function delete_comfirm(post_id, section) {
+/**
+ * comfirm removing the page
+ * @param {number} post_id post we want to delete
+ * @param {htmlNode} section remove the page section
+ */
+export function delete_comfirm(post_id) {
     const modal = document.getElementById('deleteModal');
     modal.style.display = 'block';
     const confirm = document.getElementById('delete-confirm-button');
@@ -294,14 +335,18 @@ export function delete_comfirm(post_id, section) {
                     const index = posts_list.indexOf(post_id.toString());
                     posts_list.splice(index, 1);
                     window.localStorage.setItem('posts', posts_list.toString());
-                    section.parentNode.removeChild(section);
                     modal.style.display = 'none';
                     window.history.back();
                 }
             })
     })
 }
-
+/**
+ * the update posts event function
+ * @param {number} post_id 
+ * @param {strint} post_src 
+ * @param {string} post_text 
+ */
 export function modify_post(post_id, post_src, post_text) {
     const parent = document.getElementById('modify-modal-content');
     document.getElementById('modifyModal').style.display = 'block';
@@ -310,13 +355,21 @@ export function modify_post(post_id, post_src, post_text) {
     }
     add_element_show_post(parent, post_id, post_src, post_text);
 }
+/**
+ * reset_post_id
+ */
 export function reset_post_id() {
     post_num = 0;
 }
+/**
+ * infinite fetch feed
+ */
 export function fetch_more() {
     fetch_feed(post_num);
 }
-
+/**
+ * function the push notification
+ */
 export function newfeedmessage() {
     const parent = document.getElementById('large-feed');
     const feed = api_backend.getData('user/feed?p=0&n=1', window.localStorage.getItem('AUTH_KEY'));

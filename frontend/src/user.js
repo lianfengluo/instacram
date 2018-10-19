@@ -3,6 +3,11 @@ import { change_hash_location } from './main.js';
 import { BACKEND_URL } from './global_var.js';
 import API from './api.js';
 const api = new API(BACKEND_URL);
+/**
+ * check user login input validation
+ * @param {htmlNode} username_input 
+ * @param {htmlNode} password_input
+ */
 const login_check = (username_input, password_input) => {
     // username
     const pattern1 = /^([A-Za-z0-9-_+]{6,30})$/
@@ -26,7 +31,9 @@ const login_check = (username_input, password_input) => {
         }
     }
 }
-
+/**
+ * show the login form
+ */
 export function login_form_show()  {
     const parent = document.getElementById('large-feed');
     const login_form = createElement('div', null, {id: 'login_form'});
@@ -63,7 +70,14 @@ export function login_form_show()  {
         }
     });
 }
-
+/**
+ * signup info validation
+ * @param {htmlNode} username_input 
+ * @param {htmlNode} password_input
+ * @param {htmlNode} confirm_password_input
+ * @param {htmlNode} email_input
+ * @param {htmlNode} name_input
+ */
 const register_check = (username_input, password_input, confirm_password_input, email_input, name_input) => {
     // username
     const pattern1 = /^([A-Za-z0-9-_+]{6,30})$/
@@ -108,7 +122,9 @@ const register_check = (username_input, password_input, confirm_password_input, 
         }
     }
 }
-
+/**
+ * signup form render
+ */
 export function register_form_show() {
     const parent = document.getElementById('large-feed');
     const signup_form = createElement('div', null, { id: 'register_form' });
@@ -156,7 +172,9 @@ export function register_form_show() {
     });
 }
 
-
+/**
+ * login submit event
+ */
 const login_submit = () => {
     const form = document.getElementById('login_form');
     const username = document.getElementById('username-input').value;
@@ -182,7 +200,9 @@ const login_submit = () => {
         }
     });
 }
-
+/**
+ * signup submit event
+ */
 const signup_submit = () => {
     const form = document.getElementById('register_form');
     const username = document.getElementById('username-input').value;
@@ -210,7 +230,9 @@ const signup_submit = () => {
         }
     });
 }
-
+/**
+ * location success event
+ */
 const fill_login_info = () => {
     const results = api.getData('user', window.localStorage.getItem('AUTH_KEY'));
     results

@@ -6,7 +6,11 @@ import { BACKEND_URL, STATIC_URL } from './global_var.js';
 
 const api_backend = new API(BACKEND_URL);
 
-
+/**
+ * Getting the use image
+ * @param {htmlNode} parent 
+ * @param {number} posts 
+ */
 const fetch_user_feed = (parent, posts) => {
     for(const post_id of posts) {
         const user_info = api_backend.getData(`post/?id=${post_id}`, window.localStorage.getItem('AUTH_KEY'));
@@ -22,6 +26,13 @@ const fetch_user_feed = (parent, posts) => {
 }
 let is_following = false;
 let followed_num = null;
+/**
+ * fetch the user page information
+ * @param {htmlNode} parent 
+ * @param {string} username 
+ * @param {number} id 
+ * @param {list} following_list 
+ */
 const fetch_user_info = (parent, username, id,  following_list) => {
     let user_info = null;
     if (username) {
@@ -48,11 +59,12 @@ const fetch_user_info = (parent, username, id,  following_list) => {
             const follow_button = createElement('button', 'follow', { id: 'follow-button', class: 'not-follow' })
             if (info.username === window.localStorage.getItem('username')) {
                 follow_button.style.display = 'none';
-            }
-            else if (following_list.includes(info.id)) {
+            } else if (following_list.includes(info.id)) {
                 follow_button.className = 'following';
                 follow_button.innerText = 'following';
                 is_following = true;
+            } else {
+                is_following = false;
             }
             follow_button.addEventListener('click', () => {
                 follow_event(info.username, follow_button, followed);
@@ -71,7 +83,12 @@ const fetch_user_info = (parent, username, id,  following_list) => {
         }
     });
 }
-
+/**
+ * render the user page
+ * @param {htmlNode} user_info 
+ * @param {string} username 
+ * @param {number} id 
+ */
 const fetch_all = (user_info, username, id) => {
     const my_user_info = api_backend.getData('user', window.localStorage.getItem('AUTH_KEY'));
     my_user_info
@@ -85,10 +102,12 @@ const fetch_all = (user_info, username, id) => {
             }
         })
 }
-export function reset_follow() {
-    is_following = false;
-}
-
+/**
+ * upload the following event
+ * @param {string} username 
+ * @param {htmlNode} follow_button 
+ * @param {htmlNode} followed 
+ */
 const follow_event = (username, follow_button, followed) => {
     if (is_following === true) {
         // do the unfollow operation
@@ -116,7 +135,10 @@ const follow_event = (username, follow_button, followed) => {
             })
     }
 }
-
+/**
+ * search user page by username
+ * @param {string} username 
+ */
 export function show_user_page(username) {
     const parent = document.getElementById('large-feed');
     const section = createElement('section', null,{id : 'user-page-section'})
@@ -128,6 +150,10 @@ export function show_user_page(username) {
     section.appendChild(user_info);
     parent.appendChild(section)
 }
+/**
+ * search user page by user id
+ * @param {number} id post id 
+ */
 export function show_user_page_id(id) {
     const parent = document.getElementById('large-feed');
     const section = createElement('section', null, { id: 'user-page-section' })
@@ -139,6 +165,9 @@ export function show_user_page_id(id) {
     section.appendChild(user_info);
     parent.appendChild(section)
 }
+/**
+ * render the search box on the navigator
+ */
 export function search_tool() {
     const search_box = document.getElementById('user-search-box');
     const search_input = createElement('input', null, {id:'search-input', placeholder:'Search user (username)'})

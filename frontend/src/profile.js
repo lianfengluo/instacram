@@ -4,13 +4,18 @@ import { show_likes } from './feed.js';
 import { BACKEND_URL } from './global_var.js';
 import API from './api.js';
 
-const api = new API(BACKEND_URL);
+const api_backend = new API(BACKEND_URL);
 let sum_likes = 0;
+/**
+ * get all the likes we get in our posts
+ * @param {list} list 
+ * @param {htmlNode} likes_box 
+ */
 const getLikes = (list, likes_box) => {
     sum_likes = 0;
     for (const element of list) {
         const post_url = `post/?id=${element}`;
-        const results = api.getData(post_url, window.localStorage.getItem('AUTH_KEY'));
+        const results = api_backend.getData(post_url, window.localStorage.getItem('AUTH_KEY'));
         results
             .then(res => {
                 sum_likes += res.meta.likes.length;
@@ -18,9 +23,15 @@ const getLikes = (list, likes_box) => {
             })
     }
 }
+/**
+ * update the user information send request to the backend 
+ * @param {string} password 
+ * @param {string} email 
+ * @param {string} name 
+ */
 const submit_update = (password, email, name) => {
     const data = {password: password, email: email, name: name};
-    const results = api.putData('user', data, window.localStorage.getItem('AUTH_KEY'));
+    const results = api_backend.putData('user', data, window.localStorage.getItem('AUTH_KEY'));
     const form = document.getElementById('profile-user-form');
     results
         .then(res => {
@@ -38,6 +49,9 @@ const submit_update = (password, email, name) => {
             }
         })
 }
+/**
+ * User info update validation
+ */
 const update_profile = () => {
     const error_message = document.getElementById('signup-error-message');
     if (error_message) error_message.parentNode.removeChild(error_message);
@@ -81,7 +95,9 @@ const update_profile = () => {
 
 }
 
-const api_backend = new API('http://127.0.0.1:5000');
+/**
+ * render profile page
+ */
 export function show_profile() {
     const parent = document.getElementById('large-feed');
     const section = createElement('section', null, { id: 'profile-div' });
@@ -127,10 +143,12 @@ export function show_profile() {
         section.insertBefore(change_button, update_profile_button);
         change_button.addEventListener('click', update_profile);
         update_profile_button.style.display = 'none';
-        // section.removeChild(update_profile_button);
     })
 }
-
+/**
+ * render user profile user info part
+ * @param {html_object} div 
+ */
 const fetch_my_info = (div) => {
     const user_info = api_backend.getData('user/', window.localStorage.getItem('AUTH_KEY'));
     user_info

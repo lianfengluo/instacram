@@ -5,6 +5,10 @@ import { BACKEND_URL } from './global_var.js';
 import API from './api.js';
 
 const api_backend = new API(BACKEND_URL);
+/**
+ * fetching the post message
+ * @param {number} post_id 
+ */
 export function show_post_detail(post_id) {
     const post = api_backend.getData(`post?id=${post_id}`, window.localStorage.getItem('AUTH_KEY'));
     post
