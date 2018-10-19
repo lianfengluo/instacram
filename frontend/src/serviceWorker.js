@@ -3,6 +3,8 @@ const mycache = 'v1';
 const cacheFiles = [
     // frontend url
     './',
+    '../favicon.ico',
+    './serviceWorker.js"',
     './api.js',
     './error_page.js',
     './feed.js',
@@ -93,7 +95,7 @@ self.addEventListener('fetch', (e) => {
 // remove all the cache from backend
 export function clearAllCaches() {
     caches.open(mycache).then(function (cache) {
-        for (const url of BACKEND_URL) {
+        for (const url of backendURL) {
             cache.delete(url).then(()=>{});
         }
     })
