@@ -3,7 +3,6 @@ const cacheFiles = [
     // frontend url
     './',
     '../favicon.ico',
-    './serviceWorker.js"',
     './api.js',
     './error_page.js',
     './feed.js',

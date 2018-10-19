@@ -7,7 +7,16 @@ import { show_error, show_expired, no_user_error } from './error_page.js';
 import { show_user_page, search_tool, show_user_page_id } from './userpage.js';
 import { show_post_detail } from './posts.js';
 
-
+if ('serviceWorker' in navigator) {
+    navigator.serviceWorker
+        .register('/src/serviceWorker.js')
+        .then(() => {
+            console.log('Service Worker registered');
+        })
+        .catch((err) => {
+            console.warn('Error in registering service worker', err);
+        })
+}
 let offset_height = null;
 let window_height = null
 let prev_height = 0;
