@@ -1,4 +1,5 @@
-const mycache = 'v2';
+const BACKEND_URL = 'http://127.0.0.1:5000';
+const mycache = 'v1';
 const cacheFiles = [
     // frontend url
     './',
@@ -23,19 +24,19 @@ const cacheFiles = [
     '../styles/provided.css',
     '../index.html',
 ]
-// const backendURL = [
-//     // backend url
-//     `${BACKEND_URL}/post/`,
-//     `${BACKEND_URL}/post/comment`,
-//     `${BACKEND_URL}/post/like`,
-//     `${BACKEND_URL}/post/unlike`,
-//     `${BACKEND_URL}/auth/login`,
-//     `${BACKEND_URL}/auth/signup`,
-//     `${BACKEND_URL}/user/`,
-//     `${BACKEND_URL}/user/feed`,
-//     `${BACKEND_URL}/user/follow`,
-//     `${BACKEND_URL}/user/unfollow`,
-// ]
+const backendURL = [
+    // backend url
+    `${BACKEND_URL}/post/`,
+    `${BACKEND_URL}/post/comment`,
+    `${BACKEND_URL}/post/like`,
+    `${BACKEND_URL}/post/unlike`,
+    `${BACKEND_URL}/auth/login`,
+    `${BACKEND_URL}/auth/signup`,
+    `${BACKEND_URL}/user/`,
+    `${BACKEND_URL}/user/feed`,
+    `${BACKEND_URL}/user/follow`,
+    `${BACKEND_URL}/user/unfollow`,
+]
 /**
  * initialize the service
   */
@@ -91,3 +92,11 @@ self.addEventListener('fetch', (e) => {
         })
     )
 })
+// remove all the cache from backend
+export function clearAllCaches() {
+    caches.open(mycache).then(function (cache) {
+        for (const url of backendURL) {
+            cache.delete(url).then(()=>{});
+        }
+    })
+}

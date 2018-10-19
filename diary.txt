@@ -11,3 +11,4 @@
 19/10/18    12:00am     12:50am     doing the notification
 19/10/18    8:40am      9:30am      change some style and change a bug in follow function
 19/10/18    10:00am     11:10am     adding comment to the code and debug a bit
+19/10/18    9:00pm      10:30am     debug

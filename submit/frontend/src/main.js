@@ -7,16 +7,19 @@ import { show_error, show_expired, no_user_error } from './error_page.js';
 import { show_user_page, search_tool, show_user_page_id } from './userpage.js';
 import { show_post_detail } from './posts.js';
 
+if ('serviceWorker' in navigator) {
+    navigator.serviceWorker
+        .register('./src/serviceWorker.js')
+        .then(() => {
 
+        })
+        .catch((err) => {
+            console.warn('Service Worker Failed to Register', err);
+        })
+}
 let offset_height = null;
 let window_height = null
 let prev_height = 0;
-const reset_height = () => {
-    offset_height = null;
-    window_height = null
-    prev_height = 0;
-}
-
 // nav tool event and check login
 const is_login = () => {
     const profile_button = document.getElementById('profile-button');
@@ -49,7 +52,6 @@ const is_login = () => {
 const modal = document.getElementById('myModal');
 const delete_model = document.getElementById('deleteModal');
 const modify_model = document.getElementById('modifyModal');
-
 // routing function
 export function change_hash_location() {
     const new_hash_location = window.location.hash.substr(1);
@@ -57,13 +59,15 @@ export function change_hash_location() {
     while (parent.firstChild) {
         parent.removeChild(parent.firstChild);
     }
-    reset_height()
+    offset_height = null;
+    window_height = null
+    prev_height = 0;
+    reset_post_id();
     modal.style.display = 'none';
     delete_model.style.display = 'none';
     modify_model.style.display = 'none';
     is_login();
     if (!new_hash_location && checkStore('AUTH_KEY') !== null) {
-        reset_post_id();
         show_post_box();
         fetch_feed();
     } else if (!new_hash_location) {
@@ -130,10 +134,6 @@ window.setInterval(() => {
 */
 window.setInterval(() => {
     if ((window.location.hash === '#' || !window.location.hash) && checkStore('AUTH_KEY') !== null) {
-        let is_load = newfeedmessage();
-        is_load.then(value => {
-            if (value === true)
-                reset_height();
-        })
+        newfeedmessage();
     }
 }, 5000);

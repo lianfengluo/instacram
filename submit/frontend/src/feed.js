@@ -1,7 +1,6 @@
 // importing named exports we use brackets
 import { createFeed, createElement } from './helpers.js';
 import { BACKEND_URL } from './global_var.js';
-// import { reset_height } from './main.js';
 import API from './api.js';
 // when importing 'default' exports, use below syntax
 
@@ -380,7 +379,7 @@ export function fetch_more() {
 export function newfeedmessage() {
     const parent = document.getElementById('large-feed');
     const feed = api_backend.getData('user/feed?p=0&n=1', window.localStorage.getItem('AUTH_KEY'));
-    return feed
+    feed
         .then(posts => {
             if ('posts' in posts) {
                 if (posts.posts.length > 0) {
@@ -394,11 +393,10 @@ export function newfeedmessage() {
                                     parent.removeChild(parent.childNodes[1]);
                                 }
                                 fetch_feed();
-                                return true;
                             });
                             parent.insertBefore(notification, parent.childNodes[1])
                         }
-                    }
+                    } 
                 }
             } else if ('message' in posts) {
                 if (posts.message === 'Invalid Authorization Token') {
