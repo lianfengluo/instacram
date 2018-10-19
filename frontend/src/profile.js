@@ -2,12 +2,13 @@ import { createElement, checkStore } from './helpers.js';
 import { change_hash_location } from './main.js';
 import { show_likes } from './feed.js';
 import { BACKEND_URL } from './global_var.js';
-
+import { clearAllCaches } from './serviceWorker.js';
 
 import API from './api.js';
 
 const api_backend = new API(BACKEND_URL);
 let sum_likes = 0;
+
 /**
  * get all the likes we get in our posts
  * @param {list} list 
@@ -118,7 +119,8 @@ export function show_profile() {
     logout_button.addEventListener('click', () => {
         if (checkStore('AUTH_KEY') !== null) {
             localStorage.clear();
-            // clearAllCaches();
+            clearAllCaches();
+            sum_likes = 0;
         }
         window.location.hash = '#';
         change_hash_location();
