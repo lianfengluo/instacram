@@ -2,6 +2,8 @@ import { createElement, checkStore } from './helpers.js';
 import { change_hash_location } from './main.js';
 import { show_likes } from './feed.js';
 import { BACKEND_URL } from './global_var.js';
+import { clearAllCaches } from './serviceWorker.js';
+
 import API from './api.js';
 
 const api_backend = new API(BACKEND_URL);
@@ -115,7 +117,8 @@ export function show_profile() {
     parent.appendChild(section);
     logout_button.addEventListener('click', () => {
         if (checkStore('AUTH_KEY') !== null) {
-            localStorage.removeItem('AUTH_KEY');
+            localStorage.clear();
+            clearAllCaches();
         }
         window.location.hash = '#';
         change_hash_location();

@@ -1,6 +1,6 @@
 // importing named exports we use brackets
 import { createFeed, createElement } from './helpers.js';
-import { BACKEND_URL, STATIC_URL } from './global_var.js';
+import { BACKEND_URL } from './global_var.js';
 import API from './api.js';
 // when importing 'default' exports, use below syntax
 
@@ -69,7 +69,7 @@ export function add_element_show_post(parent, post_id = null, img_html_object = 
     upload_file_field.appendChild(upload_file_name);
     const submit_post_button = createElement('button', null, { class: 'post-submit-button' });
     const upload_icon = createElement('img', null, {
-        class: 'upload-icon', src: `${STATIC_URL}/upload-button.svg`,
+        class: 'upload-icon', src: '../data/upload-button.svg',
         alt: 'upload-button.svg'
     });
     submit_post_button.appendChild(upload_icon);
@@ -257,7 +257,7 @@ export function submit_like(likes, post_id, likes_count_div, like_box) {
                     const index = likes.indexOf(my_post_id);
                     if (index > -1) likes.splice(index, 1);
                     likes_count_div.innerText = `${likes.length} likes`;
-                    like_box.src = `${STATIC_URL}/like.png`;
+                    like_box.src = '../data/like.png';
                 }
             })
         } else {
@@ -268,7 +268,7 @@ export function submit_like(likes, post_id, likes_count_div, like_box) {
                 if ('message' in res && res.message === 'success') {
                     likes.push(my_post_id);
                     likes_count_div.innerText = `${likes.length} likes`;
-                    like_box.src = `${STATIC_URL}/liked.png`;
+                    like_box.src = '../data/liked.png';
                 }
             })
     }

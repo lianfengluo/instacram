@@ -7,6 +7,16 @@ import { show_error, show_expired, no_user_error } from './error_page.js';
 import { show_user_page, search_tool, show_user_page_id } from './userpage.js';
 import { show_post_detail } from './posts.js';
 
+if ('serviceWorker' in navigator) {
+    navigator.serviceWorker
+        .register('./src/serviceWorker.js')
+        .then(() => {
+
+        })
+        .catch((err) => {
+            console.warn('Service Worker Failed to Register', err);
+        })
+}
 
 // nav tool event and check login
 const is_login = () => {

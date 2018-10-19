@@ -2,7 +2,7 @@
 import { createElement } from './helpers.js';
 // when importing 'default' exports, use below syntax
 import API from './api.js';
-import { BACKEND_URL, STATIC_URL } from './global_var.js';
+import { BACKEND_URL } from './global_var.js';
 
 const api_backend = new API(BACKEND_URL);
 
@@ -15,10 +15,10 @@ const fetch_user_feed = (parent, posts) => {
     for(const post_id of posts) {
         const user_info = api_backend.getData(`post/?id=${post_id}`, window.localStorage.getItem('AUTH_KEY'));
         const img = createElement('img', null, { alt: `img ${post_id}`, id: `img-${post_id}`, 
-            class: 'post-image' , src: `${STATIC_URL}/blank.png` });
+            class: 'post-image', src: '../data/blank.png' });
         user_info
             .then(info => { img.src = 'data:image/png;base64,' + info.src})
-        img.addEventListener('click', () => {;
+        img.addEventListener('click', () => {
             window.location.hash = `#post=${post_id}`;
         });
         parent.appendChild(img);

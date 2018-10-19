@@ -1,10 +1,6 @@
 // change this when you integrate with the real API, or when u start using the dev server
 const API_URL = 'http://localhost:8080/data'
 
-const getJSON = (path, options) => 
-    fetch(path, options)
-        .then(res => res.json())
-        .catch(err => console.warn(`API_ERROR: ${err.message}`));
 
 /**
  * This is a sample class API which you may base your code on.
@@ -20,11 +16,9 @@ export default class API {
         this.url = url;
     } 
 
-    makeAPIRequest(path) {
-        return getJSON(`${this.url}/${path}`);
-    }
-
     /**
+     * sending request to the destination
+     * @param {string} path
      * @returns feed array in json format
      */
     getData(path, token = null) {
@@ -45,7 +39,12 @@ export default class API {
             .catch(err => console.warn(`API_ERROR: ${err.message}`));
     }
 
-
+    /**
+    * putting request to the destination
+     * @param {string} path
+     * @param {oject} data
+     * @returns feed array in json format
+     */
     putData(path, data = {}, token = null) {
         // Default options are marked with *
         return fetch(`${this.url}/${path}`, {
@@ -66,13 +65,13 @@ export default class API {
             .catch(err => console.warn(`API_ERROR: ${err.message}`));
     }
 
-    /**
-     * @returns auth'd user in json format
-     */
-    getMe() {
-        return this.makeAPIRequest('me.json');
-    }
 
+    /**
+    * posting request to the destination
+     * @param {string} path
+     * @param {oject} data
+     * @returns feed array in json format
+     */
     postData(path, data = {}, token = null) {
         // Default options are marked with *
         return fetch(`${this.url}/${path}`, {

@@ -191,7 +191,6 @@ const login_submit = () => {
             window.localStorage.setItem('AUTH_KEY', result.token);
             // rerender the posts page
             fill_login_info();
-            change_hash_location();
         } else {
             // error message
             const div = form.firstChild.nextSibling;
@@ -220,8 +219,6 @@ const signup_submit = () => {
             // set the token
             window.localStorage.setItem('AUTH_KEY', result.token);
             fill_login_info();
-            // rerender the posts page
-            window.location.hash = '#';
         } else {
             // error message
             const div = form.firstChild.nextSibling;
@@ -242,5 +239,13 @@ const fill_login_info = () => {
             window.localStorage.setItem('id', res.id);
             window.localStorage.setItem('email', res.email);
             window.localStorage.setItem('posts', res.posts);
+            if (!window.location.hash || window.location.hash === '#') {
+                // login event
+                change_hash_location();
+            }
+            else {
+                // sign up event
+                window.location.hash = '#';
+            }
         })
 }

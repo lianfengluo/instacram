@@ -1,5 +1,4 @@
 import { show_likes, submit_comment, show_comment, submit_like, delete_comfirm, modify_post } from './feed.js'
-import { STATIC_URL } from './global_var.js';
 /* returns an empty array of size max */
 export const range = (max) => Array(max).fill(null);
 
@@ -62,12 +61,12 @@ export function createFeed(post) {
     section.appendChild(createElement('p', null, { class: 'post-description_text'}));
     const section_box = createElement('section', null, {class: 'post-box'});
     const comments_box = createElement('div', null, { class: 'post-comments-box' });
-    comments_box.appendChild(createElement('img', null, {alt:'comments icon', class:'comments-icon', src: `${STATIC_URL}/blogging.svg`}))
+    comments_box.appendChild(createElement('img', null, { alt: 'comments icon', class: 'comments-icon', src: '../data/blogging.svg'}))
     const like_box = createElement('div', null, { class: 'post-likes-box' });
-    const like_icon = createElement('img', null, { alt: 'likes icon', class: 'likes-icon', src: `${STATIC_URL}/like.png` });
+    const like_icon = createElement('img', null, { alt: 'likes icon', class: 'likes-icon', src: '../data/like.png' });
     like_box.appendChild(like_icon);
     if (post.meta.likes.includes(parseInt(window.localStorage.getItem('id')))) {
-        like_icon.src = `${STATIC_URL}/liked.png`;
+        like_icon.src = '../data/liked.png';
     }
     section_box.appendChild(comments_box);
     section_box.appendChild(like_box);
