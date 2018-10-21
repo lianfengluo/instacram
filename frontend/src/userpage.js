@@ -47,12 +47,19 @@ const fetch_user_info = (parent, username, id,  following_list) => {
             const name = createElement('div', info.name, { id: 'user-info-name' });
             const message_container = createElement('div', null, { id: 'user-info-container' });
             const post_num = createElement('div', null);
-            post_num.innerHTML = `<b>Post</b><br>${info.posts.length}`
+            post_num.appendChild(createElement('b', 'Post'));
+            post_num.appendChild(createElement('br', null));
+            post_num.appendChild(createElement('span', info.posts.length));
             const following = createElement('div', null);
-            following.innerHTML = `<b>Following</b><br>${info.following.length}`
+            following.appendChild(createElement('b', 'Following'));
+            following.appendChild(createElement('br', null));
+            following.appendChild(createElement('span', info.following.length));
             const followed = createElement('div', null);
+            followed.appendChild(createElement('b', 'Followed'));
+            followed.appendChild(createElement('br', null));
             followed_num = info.followed_num;
-            followed.innerHTML = `<b>Followed</b><br>${info.followed_num}`;
+            const followed_num_span = createElement('span', info.followed_num);
+            followed.appendChild(followed_num_span);
             message_container.appendChild(post_num);
             message_container.appendChild(following);
             message_container.appendChild(followed);
@@ -67,7 +74,7 @@ const fetch_user_info = (parent, username, id,  following_list) => {
                 is_following = false;
             }
             follow_button.addEventListener('click', () => {
-                follow_event(info.username, follow_button, followed);
+                follow_event(info.username, follow_button, followed_num_span);
             });
             message_container.appendChild(follow_button);
             parent.appendChild(name);
@@ -118,7 +125,7 @@ const follow_event = (username, follow_button, followed) => {
                     follow_button.className = 'not-follow';
                     follow_button.innerText = 'follow';
                     is_following = false;
-                    followed.innerHTML = `<b>Followed</b><br>${--followed_num}`
+                    followed.innerText = `${--followed_num}`
                 }
             })
     } else {
@@ -130,7 +137,7 @@ const follow_event = (username, follow_button, followed) => {
                     follow_button.className = 'following';
                     follow_button.innerText = 'following';
                     is_following = true;
-                    followed.innerHTML = `<b>Followed</b><br>${++followed_num}`
+                    followed.innerText = `${++followed_num}`
                 }
             })
     }

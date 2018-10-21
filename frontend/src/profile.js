@@ -21,7 +21,7 @@ const getLikes = (list, likes_box) => {
         results
             .then(res => {
                 sum_likes += res.meta.likes.length;
-                likes_box.innerHTML = `<b>Likes</b><br>${sum_likes}`;
+                likes_box.innerHTML = sum_likes;
             })
     }
 }
@@ -160,17 +160,26 @@ const fetch_my_info = (div) => {
                 const name = createElement('div', info.name, { id:'user-profile-name' });
                 const message_container = createElement('div', null, {id:'user-profile-container'});
                 const post_num = createElement('div', null);
-                post_num.innerHTML = `<b>Post</b><br>${info.posts.length}`
+                post_num.appendChild(createElement('b', 'Post'));
+                post_num.appendChild(createElement('br', null));
+                post_num.appendChild(createElement('span', info.posts.length));
                 const likes = createElement('div', null);
-                likes.innerHTML = `<b>Likes</b><br>${sum_likes}`;
-                getLikes(info.posts, likes)
+                likes.appendChild(createElement('b', 'Likes'));
+                likes.appendChild(createElement('br', null));
+                const likes_num = createElement('span', sum_likes)
+                likes.appendChild(likes_num);
+                getLikes(info.posts, likes_num)
                 const following = createElement('div', null, {class: 'profile-following'});
-                following.innerHTML = `<b>Following</b><br>${info.following.length}`
+                following.appendChild(createElement('b', 'Following'));
+                following.appendChild(createElement('br', null));
+                following.appendChild(createElement('span', info.following.length));
                 following.addEventListener('click', () => {
                     show_likes(info.following);
                 })
                 const followed = createElement('div', null);
-                followed.innerHTML = `<b>Followed</b><br>${info.followed_num}`
+                followed.appendChild(createElement('b', 'Followed'));
+                followed.appendChild(createElement('br', null));
+                followed.appendChild(createElement('span', info.followed_num));
                 message_container.appendChild(post_num);
                 message_container.appendChild(likes);
                 message_container.appendChild(following);
