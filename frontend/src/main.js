@@ -116,7 +116,15 @@ window.onclick = function (event) {
 }
 
 // logo icon click event
-document.getElementById('logo-icon').addEventListener('click', () => { if (checkStore('AUTH_KEY') !== null) window.location.hash = '#';});
+document.getElementById('logo-icon').addEventListener('click', () => {
+    const lastChar = window.location.href.substr(window.location.href.length - 1);
+    if ((lastChar === '/' || lastChar === '#') && checkStore('AUTH_KEY') !== null) {
+        document.body.scrollTop = 0; // For Safari
+        document.documentElement.scrollTop = 0; // For Chrome, Firefox, IE and Opera
+    } else if (checkStore('AUTH_KEY') !== null) {
+        window.location.hash = '#';
+    }
+});
 document.getElementById('login-button').addEventListener('click', () => {window.location.hash = '#'})
 document.getElementById('close-modify').addEventListener('click', () => { modify_model.style.display = 'none' })
 search_tool();
