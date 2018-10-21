@@ -160,7 +160,7 @@ const getImageContent = (event) => {
         upload_file_data = { src: dataURL };
     };
         
-    document.getElementById('upload-img-name').innerText = document.getElementById('upload-file-field').value.replace(/^.*[\\\/]/, '');
+    document.getElementById('upload-img-name').innerText = document.getElementById('upload-file-field').value.replace(/^.*[\\/]/, '');
     // this returns a base64 image
     reader.readAsDataURL(file);
 }

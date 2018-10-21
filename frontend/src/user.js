@@ -84,7 +84,8 @@ const register_check = (username_input, password_input, confirm_password_input, 
     // password
     const pattern2 = /^(.{6,30})$/
     // email
-    const pattern3 = /^(([^<>()\[\]\\.,;:\s@']+(\.[^<>()\[\]\\.,;:\s@']+)*)|('.+'))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
+    // const pattern3 = /^(([^<>()[]\\.,;:\s@']+(\.[^<>()[]\\.,;:\s@']+)*)|('.+'))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
+    const pattern3 = /^(([^<>()[\]\\.,;:\s@']+(\.[^<>()[\]\\.,;:\s@']+)*)|('.+'))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
     if (pattern1.test(username_input.value) && pattern2.test(password_input.value) && password_input.value === confirm_password_input.value
         && pattern3.test(email_input.value) && email_input.value && name_input.value) {
         username_input.style.borderColor = '#ccc';
