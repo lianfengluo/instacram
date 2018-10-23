@@ -28,15 +28,15 @@ export default class API {
             cache: 'no-cache', // *default, no-cache, reload, force-cache, only-if-cached
             credentials: 'same-origin', // include, same-origin, *omit
             headers: {
+                // 'Access-Control-Allow-Origin': '*',
+                // 'Access-Control-Allow-Credentials':true,
                 'Content-Type': 'application/json; charset=utf-8',
                 'Authorization': `Token ${token}`
-                // 'Content-Type': 'application/x-www-form-urlencoded',
             },
             redirect: 'follow', // manual, *follow, error
             referrer: 'no-referrer', // no-referrer, *client
         })
             .then(response => response.json()) // parses response to JSON
-            .catch(err => console.warn(`API_ERROR: ${err.message}`));
     }
 
     /**
@@ -51,18 +51,18 @@ export default class API {
             method: 'PUT', // *GET, POST, PUT, DELETE, etc.
             mode: 'cors', // no-cors, cors, *same-origin
             cache: 'no-cache', // *default, no-cache, reload, force-cache, only-if-cached
+            // credentials: 'omit',
             credentials: 'same-origin', // include, same-origin, *omit
             headers: {
+                // 'Access-Control-Allow-Credentials': true,
                 'Content-Type': 'application/json; charset=utf-8',
                 'Authorization': `Token ${token}`
-                // 'Content-Type': 'application/x-www-form-urlencoded',
             },
             redirect: 'follow', // manual, *follow, error
             referrer: 'no-referrer', // no-referrer, *client
             body: JSON.stringify(data), // body data type must match 'Content-Type' header
         })
             .then(response => response.json()) // parses response to JSON
-            .catch(err => console.warn(`API_ERROR: ${err.message}`));
     }
 
 
@@ -78,18 +78,18 @@ export default class API {
             method: 'POST', // *GET, POST, PUT, DELETE, etc.
             mode: 'cors', // no-cors, cors, *same-origin
             cache: 'no-cache', // *default, no-cache, reload, force-cache, only-if-cached
-            credentials: 'same-origin', // include, same-origin, *omit
+            credentials: 'same-origin',
+            // credentials: 'same-origin', // include, same-origin, *omit
             headers: {
+                // 'Access-Control-Allow-Credentials': true,
                 'Content-Type': 'application/json; charset=utf-8',
                 'Authorization': `Token ${token}`
-                // 'Content-Type': 'application/x-www-form-urlencoded',
             },
             redirect: 'follow', // manual, *follow, error
             referrer: 'no-referrer', // no-referrer, *client
             body: JSON.stringify(data), // body data type must match 'Content-Type' header
         })
             .then(response => response.json()) // parses response to JSON
-            .catch(err => console.warn(`API_ERROR: ${err.message}`));
     }
     deleteData(path, token = null) {
         // Default options are marked with *
@@ -97,18 +97,18 @@ export default class API {
             method: 'DELETE', // *GET, POST, PUT, DELETE, etc.
             mode: 'cors', // no-cors, cors, *same-origin
             cache: 'no-cache', // *default, no-cache, reload, force-cache, only-if-cached
-            credentials: 'same-origin', // include, same-origin, *omit
+            credentials: 'same-origin',
+            // credentials: 'same-origin', // include, same-origin, *omit
             headers: {
+                // 'Access-Control-Allow-Credentials': true,
                 'Content-Type': 'application/json; charset=utf-8',
                 'Authorization': `Token ${token}`
-                // 'Content-Type': 'application/x-www-form-urlencoded',
             },
             redirect: 'follow', // manual, *follow, error
             referrer: 'no-referrer', // no-referrer, *client
             // body: JSON.stringify(data), // body data type must match 'Content-Type' header
         })
             .then(response => response.json()) // parses response to JSON
-            .catch(err => console.warn(`API_ERROR: ${err.message}`));
     }
 }
 

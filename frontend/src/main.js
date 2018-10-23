@@ -9,7 +9,7 @@ import { show_post_detail } from './posts.js';
 
 if ('serviceWorker' in navigator) {
     navigator.serviceWorker
-        .register('/src/serviceWorker.js')
+        .register('../serviceWorker.js')
         .then(() => {
             console.log('Service Worker registered');
         })
