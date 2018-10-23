@@ -398,12 +398,12 @@ export function newfeedmessage() {
                         }
                     }
                     set_notification_time(newest_time);
-                    let notification = null;
                     if (num_of_new > 0) {
+                        let notification = null;
                         if (num_of_new === 10)
-                            notification = new Notification('You have 10+ new notification')
+                            notification = new Notification('You have 10+ new notifications')
                         else if(num_of_new > 0) 
-                            notification = new Notification(`You have ${num_of_new} new notification`)
+                            notification = new Notification(`You have ${num_of_new} new notification(s)`)
                         setTimeout(notification.close.bind(notification), 4000)
                     }
                 }
