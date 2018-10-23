@@ -49,7 +49,6 @@ const is_login = () => {
         document.getElementById('user-search-box').style.display = 'inline-block';
     } else {
         document.getElementById('login-button').style.display = 'inline-block';
-        // document.getElementById('login-button').innerText = 'Login';
         profile_button.style.display = 'none';
         my_post_button.style.display = 'none';
         document.getElementById('user-search-box').style.display = 'none';
@@ -141,12 +140,22 @@ window.setInterval(() => {
         fetch_more();
     }
 }, 2000);
-
+Notification.requestPermission().then(function (result) {
+    if (result === 'denied') {
+        console.log('Permission wasn\'t granted. Allow a retry.');
+        return;
+    }
+    if (result === 'default') {
+        console.log('The permission request was dismissed.');
+        return;
+    }
+    // Do something with the granted permission.
+});
 /**
  * listener the getting notification
 */
 window.setInterval(() => {
-    if ((window.location.hash === '#' || !window.location.hash) && checkStore('AUTH_KEY') !== null) {
+    if (checkStore('AUTH_KEY') !== null) {
         newfeedmessage();
     }
-}, 5000);
+}, 10000);

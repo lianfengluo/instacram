@@ -175,7 +175,7 @@ const fetch_my_info = (div) => {
                 following.appendChild(createElement('br', null));
                 following.appendChild(createElement('span', info.following.length));
                 following.addEventListener('click', () => {
-                    show_likes(info.following);
+                    show_likes(info.following, 'Follow');
                 })
                 const followed = createElement('div', null);
                 followed.appendChild(createElement('b', 'Followed'));

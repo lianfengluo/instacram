@@ -1,7 +1,6 @@
 // importing named exports we use brackets
 import { createFeed, createElement } from './helpers.js';
-import { BACKEND_URL } from './global_var.js';
-// import { reset_height } from './main.js';
+import { BACKEND_URL, first_post_id_time, set_notification_time } from './global_var.js';
 import API from './api.js';
 // when importing 'default' exports, use below syntax
 
@@ -13,8 +12,7 @@ const api_backend = new API(BACKEND_URL);
 
 // this variable is used to keep track on the infinite post
 let post_num = 0;
-// this variable is used to keep track on whether have new message comming
-let first_post_id = null;
+
 /**
  * fetch feed function is about sending the request to backend and fetch the posts
  * @param {number} p the starting position of fetching data 
@@ -28,7 +26,7 @@ export function fetch_feed(p=0, n=10) {
                 if (posts.posts.length > 0) {
                     posts.posts.reduce((parent, post) => {
                         if (post_num++ === 0){
-                            first_post_id = post.id;
+                            set_notification_time(post.meta.published)
                         }
                         parent.appendChild(createFeed(post));
                         return parent;
@@ -231,13 +229,13 @@ const fetch_likes_user = (likes, parent) => {
  * show all the likes in the page
  * @param {list} likes a list user id that likes this posts
  */
-export function show_likes(likes) {
+export function show_likes(likes, title = 'Likes') {
     const parent = document.getElementById('modal-content');
     document.getElementById('myModal').style.display = 'block';
     while (parent.firstChild) {
         parent.removeChild(parent.firstChild);
     }
-    parent.appendChild(createElement('h3', 'Likes:'));
+    parent.appendChild(createElement('h3', `${title}:`));
     fetch_likes_user(likes, parent);
 }
 /**
@@ -374,32 +372,41 @@ export function reset_post_id() {
 export function fetch_more() {
     fetch_feed(post_num);
 }
+
+
+
+
 /**
  * function the push notification
  */
 export function newfeedmessage() {
-    const parent = document.getElementById('large-feed');
-    const feed = api_backend.getData('user/feed?p=0&n=1', window.localStorage.getItem('AUTH_KEY'));
-    return feed
+    const feed = api_backend.getData('user/feed?p=0&n=10', window.localStorage.getItem('AUTH_KEY'));
+    feed
         .then(posts => {
             if ('posts' in posts) {
                 if (posts.posts.length > 0) {
-                    if (posts.posts[0].id !== first_post_id) {
-                        // new feed comes
-                        if (!document.getElementById('notification')) {
-                            const notification = createElement('div', 'You have new messages', {id: 'notification'});
-                            notification.addEventListener('click', () => {
-                                post_num = 0;
-                                location.reload();
-                            });
-                            parent.insertBefore(notification, parent.childNodes[1])
+                    let num_of_new = 0;
+                    let newest_time = null;
+                    // new feed comes
+                    for (const post_index in posts.posts) {
+                        if (post_index == 0)
+                            newest_time = posts.posts[post_index].meta.published
+                        if (posts.posts[post_index].meta.published > first_post_id_time) {
+                            ++num_of_new
+                        } else {
+                            break
                         }
                     }
-                }
-            } else if ('message' in posts) {
-                if (posts.message === 'Invalid Authorization Token') {
-                    window.location.hash = '#expired';
+                    set_notification_time(newest_time);
+                    let notification = null;
+                    if (num_of_new > 0) {
+                        if (num_of_new === 10)
+                            notification = new Notification('You have 10+ new notification')
+                        else if(num_of_new > 0) 
+                            notification = new Notification(`You have ${num_of_new} new notification`)
+                        setTimeout(notification.close.bind(notification), 4000)
+                    }
                 }
             }
-        });
+        })
 }
