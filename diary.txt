@@ -14,3 +14,4 @@
 19/10/18    9:00pm      10:30am     debug
 20/10/18    9:00pm      10:30am     debug
 22/10/18    9:00pm      10:30am     Fix some features
+23/10/18    11:30am     1:30pm      Adding service worker with the offline feature
