@@ -156,6 +156,6 @@ Notification.requestPermission().then(function (result) {
 */
 window.setInterval(() => {
     if (checkStore('AUTH_KEY') !== null) {
-        newfeedmessage();
+        newfeedmessage()
     }
 }, 10000);

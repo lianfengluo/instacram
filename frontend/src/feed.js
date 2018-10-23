@@ -391,7 +391,7 @@ export function newfeedmessage() {
                     for (const post_index in posts.posts) {
                         if (post_index == 0)
                             newest_time = posts.posts[post_index].meta.published
-                        if (posts.posts[post_index].meta.published > first_post_id_time) {
+                        if (first_post_id_time && posts.posts[post_index].meta.published > first_post_id_time) {
                             ++num_of_new
                         } else {
                             break
