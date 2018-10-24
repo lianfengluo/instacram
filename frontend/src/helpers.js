@@ -106,7 +106,7 @@ export function createFeed(post) {
             comment_div.style.display = 'none';
     });
     comment_submit_button.addEventListener('click', () => {
-        submit_comment(comment_input.value, window.localStorage.getItem('name'), post.id, comments_num, comment_input, post.comments);
+        submit_comment(comment_input.value, window.localStorage.getItem('username'), post.id, comments_num, comment_input, post.comments);
     })
     if (posts_array.includes(post.id.toString())) {
         const modify = createElement('div', 'Modify this post', { class: 'modify-region' });

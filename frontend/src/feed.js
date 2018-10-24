@@ -315,6 +315,9 @@ export function show_comment(comments) {
         const comment_box = createElement('div', null, { class: 'comment-box' })
         const author = createElement('b', `${comment.author}: `, { class: 'comment-author' });
         const message = createElement('div', `  ${comment.comment}`);
+        author.addEventListener('click', () => {
+            window.location.hash = `user=${comment.author}`;
+        })
         comment_box.appendChild(author);
         comment_box.appendChild(message);
         div.appendChild(comment_box);
