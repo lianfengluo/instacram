@@ -77,12 +77,12 @@ const update_profile = () => {
         email_input.style.borderColor = '#ccc';
         email_input.placeholder = 'Enter new email';
         name.style.borderColor = '#ccc';
-        name.placeholder = 'Enter new name (display name)';
+        name.placeholder = 'Enter new name (real name)';
         submit_update(password.value, email_input.value, name.value);
     } else {
         if (!name.value) {
             name.style.borderColor = 'red';
-            name.placeholder = 'Please enter display name';
+            name.placeholder = 'Please enter real name';
         }
         if (!pattern1.test(password.value)) {
             password.style.borderColor = 'red';

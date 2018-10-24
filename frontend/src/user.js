@@ -97,7 +97,7 @@ const register_check = (username_input, password_input, confirm_password_input, 
         email_input.style.borderColor = '#ccc';
         email_input.placeholder = 'Enter email';
         name_input.style.borderColor = '#ccc';
-        name_input.placeholder = 'Enter name (display name)';
+        name_input.placeholder = 'Enter name (real name)';
         signup_submit();
     } else {
         // show error messages
@@ -138,7 +138,7 @@ export function register_form_show() {
     const confirm_password_input = createElement('input', null, { type: 'password', placeholder: 'Confirm password',
         id: 'confirm-password-input', pattern: '^[A-Za-z0-9]{6,30}$' });
     const email_input = createElement('input', null, { type: 'email', placeholder: 'Enter email', id: 'email-input' });
-    const name_input = createElement('input', null, { type: 'text', placeholder: 'Enter name (display name)', 
+    const name_input = createElement('input', null, { type: 'text', placeholder: 'Enter name (real name)', 
                                                         id: 'display-name-input', required: true });
     input_div.appendChild(username_input);
     input_div.appendChild(createElement('br', null));

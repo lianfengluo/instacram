@@ -70,7 +70,7 @@ self.addEventListener('fetch', (event) => {
                 return fetch(fetchRequest)
                     .then((real_response) => {
                         // Check if we received a valid response
-                        if (!real_response || real_response.status !== 200) {
+                        if (!real_response || real_response.status !== 200 || fetchRequest.method !== 'GET') {
                             return real_response;
                         }
                         // IMPORTANT: Clone the response. A response is a stream
