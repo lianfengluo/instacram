@@ -44,7 +44,7 @@ const fetch_user_info = (parent, username, id,  following_list) => {
     user_info
         .then(info => {
         if ('id' in info) {
-            const name = createElement('div', info.name, { id: 'user-info-name' });
+            const name = createElement('div', info.username, { id: 'user-info-name' });
             const message_container = createElement('div', null, { id: 'user-info-container' });
             const post_num = createElement('div', null);
             post_num.appendChild(createElement('b', 'Post'));
