@@ -81,9 +81,9 @@ self.addEventListener('fetch', (event) => {
                         caches.open(mycache)
                             .then((cache) => {
                                 cache.put(event.request, cached_response);
+                                return response;
                             });
                             
-                        return response;
                     }
                 ).catch(() => {
                     // offline than return cache response
