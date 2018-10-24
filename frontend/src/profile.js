@@ -41,6 +41,8 @@ const submit_update = (password, email, name) => {
                 if (res.msg === 'success') {
                     const error_message = createElement('h4', `Update ${res.msg}`, { style: 'color: red', id: 'signup-error-message' });
                     form.insertBefore(error_message, form.firstChild)
+                    window.localStorage.setItem('email', data.email);
+                    window.localStorage.setItem('name', data.name);
                     setTimeout(() => {
                         change_hash_location();
                     }, 1000);

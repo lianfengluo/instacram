@@ -39,6 +39,9 @@ export function createFeed(post) {
     const section = createElement('section', null, { class: 'post' , id: `post-${post.id}`});
     const post_heading = createElement('div', null, { class: 'post-heading' });
     const author_name = createElement('h2', post.meta.author, { class: 'post-title' });
+    author_name.addEventListener('click', () => {
+        window.location.hash = `#user=${post.meta.author}`
+    })
     post_heading.appendChild(author_name);
     // check if the author
     const posts_array = window.localStorage.getItem('posts').split(',');

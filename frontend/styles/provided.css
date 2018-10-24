@@ -117,6 +117,7 @@ footer {
 .post-likes-num, .post-comments-num {
     font-size: 12px;
     font-weight: 600;
+    font-style: italic;
 }
 .comments-icon, .likes-icon, .login-icon, .upload-icon {
     overflow: hidden;
@@ -565,7 +566,9 @@ textarea {
 }
 .modify-region {
     margin-top: 5px;
-    font-weight: 600;
+    font-weight: 500;
+    font-style: oblique;
+    color: rgba(0, 0, 0, 0.534);
 }
 .likes-region:hover, .modify-region:hover, .comments-region:hover, .like-author:hover,
 .post-likes-num:hover, .post-comments-num:hover, .profile-following:hover {
