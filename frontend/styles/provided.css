@@ -157,7 +157,16 @@ footer {
         height: auto;
     }
 }
+@media screen and (max-width: 648px) {
+    #user-search-box {
+        display: none !important;
+    }
+}
+.user-module-title {
+    font-family: "Palatino Linotype", "Book Antiqua", Palatino, serif !important;
+}
 #logo-icon {
+    font-family: "Comic Sans MS", cursive, sans-serif !important;
     cursor: pointer;
 }
 #login_form, #register_form {

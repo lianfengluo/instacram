@@ -37,7 +37,7 @@ const login_check = (username_input, password_input) => {
 export function login_form_show()  {
     const parent = document.getElementById('large-feed');
     const login_form = createElement('div', null, {id: 'login_form'});
-    const login_form_title = createElement('h1', 'Login');
+    const login_form_title = createElement('h1', 'Login', { class: 'user-module-title' });
     const input_div = createElement('div', null);
     const username_input = createElement('input', null, {type: 'text', placeholder: 'Enter username', id:'username-input',
                                                     pattern: '^[A-Za-z0-9]{6,30}$'});
@@ -129,7 +129,7 @@ const register_check = (username_input, password_input, confirm_password_input, 
 export function register_form_show() {
     const parent = document.getElementById('large-feed');
     const signup_form = createElement('div', null, { id: 'register_form' });
-    const signup_form_title = createElement('h1', 'Signup');
+    const signup_form_title = createElement('h1', 'Signup', {class: 'user-module-title'});
     const input_div = createElement('div', null);
     const username_input = createElement('input', null, { type: 'text', placeholder: 'Enter username',
                                                          id: 'username-input', pattern:'^[A-Za-z0-9]{6,30}$' });

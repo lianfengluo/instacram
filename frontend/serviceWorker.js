@@ -77,10 +77,10 @@ self.addEventListener('fetch', (event) => {
                         // and because we want the browser to consume the response
                         // as well as the cache consuming the response, we need
                         // to clone it so we have two streams.
-                        const responseToCache = real_response.clone();
+                        const cached_response = real_response.clone();
                         caches.open(mycache)
                             .then((cache) => {
-                                cache.put(event.request, responseToCache);
+                                cache.put(event.request, cached_response);
                             });
                             
                         return response;
