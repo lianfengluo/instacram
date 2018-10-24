@@ -119,10 +119,8 @@ export function show_profile() {
     section.appendChild(logout_button);
     parent.appendChild(section);
     logout_button.addEventListener('click', () => {
-        if (checkStore('AUTH_KEY') !== null) {
-            localStorage.clear();
-            sum_likes = 0;
-        }
+        localStorage.clear();
+        sum_likes = 0;
         window.location.hash = '#';
         change_hash_location();
     });
@@ -160,7 +158,7 @@ const fetch_my_info = (div) => {
     user_info
         .then(info => {
             if ('id' in info) {
-                const name = createElement('div', info.name, { id:'user-profile-name' });
+                const name = createElement('div', info.username, { id:'user-profile-name' });
                 const message_container = createElement('div', null, {id:'user-profile-container'});
                 const post_num = createElement('div', null);
                 post_num.appendChild(createElement('b', 'Post'));
@@ -203,7 +201,7 @@ const fetch_my_info = (div) => {
                 email_input.value = info.email;
                 const name_text = createElement('label', 'name ');
                 const name_input = createElement('input', null, {
-                    type: 'text', placeholder: 'Enter new name (display name)',
+                    type: 'text', placeholder: 'Enter new name (real name)',
                     id: 'display-name-input', required: true, disabled: true
                 });
                 name_input.value = info.name;
