@@ -151,11 +151,15 @@ Notification.requestPermission().then(function (result) {
     }
     // Do something with the granted permission.
 });
+const worker = new Worker('../serviceWorker.js')
+worker.addEventListener('message', ()=> {
+    if (checkStore('AUTH_KEY') !== null) {
+        newfeedmessage()
+    }
+})
 /**
  * listener the getting notification
 */
 window.setInterval(() => {
-    if (checkStore('AUTH_KEY') !== null) {
-        newfeedmessage()
-    }
+    worker.postMessage('getNotification')
 }, 10000);

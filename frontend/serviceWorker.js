@@ -23,9 +23,6 @@ const cacheFiles = [
     // './index.html',
 ]
 
-let CURRENT_CACHES = {
-    all: mycache
-};
 
 
 self.addEventListener('install', event => {
@@ -77,4 +74,8 @@ self.addEventListener('fetch', (event) => {
             })
     );
 }); 
+self.addEventListener('message', () => {
+    self.postMessage('notification')
+});
+
 

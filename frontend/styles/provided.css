@@ -173,7 +173,9 @@ footer {
     max-width: 640px;
     min-width: 440px;
     overflow: hidden;
-    margin: 30px auto;
+    margin: auto;
+    margin-top: 50px;
+    margin-bottom: 50px;
     background-color: white;
     border: 1px solid rgba(0,0,0,.0975);
     margin-left: 24%;
