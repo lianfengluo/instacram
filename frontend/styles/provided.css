@@ -581,6 +581,10 @@ textarea {
     font-style: oblique;
     color: rgba(0, 0, 0, 0.534);
 }
+.like-author {
+    color: #3897f0;
+    font-weight: 600;
+}
 .likes-region:hover, .modify-region:hover, .comments-region:hover, .like-author:hover,
 .post-likes-num:hover, .post-comments-num:hover, .profile-following:hover, .comment-author:hover {
     cursor: pointer;

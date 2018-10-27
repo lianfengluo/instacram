@@ -1,6 +1,6 @@
 // importing named exports we use brackets
 import { createElement } from './helpers.js';
-// when importing 'default' exports, use below syntax
+import { show_likes } from './feed.js';
 import API from './api.js';
 import { BACKEND_URL } from './global_var.js';
 
@@ -50,10 +50,13 @@ const fetch_user_info = (parent, username, id,  following_list) => {
             post_num.appendChild(createElement('b', 'Post'));
             post_num.appendChild(createElement('br', null));
             post_num.appendChild(createElement('span', info.posts.length));
-            const following = createElement('div', null);
+            const following = createElement('div', null, { class: 'profile-following' });
             following.appendChild(createElement('b', 'Following'));
             following.appendChild(createElement('br', null));
             following.appendChild(createElement('span', info.following.length));
+            following.addEventListener('click', () => {
+                show_likes(info.following, 'Follow');
+            })
             const followed = createElement('div', null);
             followed.appendChild(createElement('b', 'Followed'));
             followed.appendChild(createElement('br', null));

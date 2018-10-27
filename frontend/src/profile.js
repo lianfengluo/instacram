@@ -1,4 +1,4 @@
-import { createElement, checkStore } from './helpers.js';
+import { createElement } from './helpers.js';
 import { change_hash_location } from './main.js';
 import { show_likes } from './feed.js';
 import { BACKEND_URL } from './global_var.js';
