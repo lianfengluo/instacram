@@ -1,3 +1,6 @@
+## Author
+<b>Richard Luo</b>
+
 ## Introduction
 
 JavaScript is used increasingly to provide a native-like application experience in the web. One
@@ -21,6 +24,8 @@ Some of the skills/concepts this assignment aims to test (and build upon):
 * Push Notifications (Polling)
 * Offline Support
 * Routing (URL fragment based routing)
+
+**Note: All of this features have been fulfilled**
 
 ## API
 
